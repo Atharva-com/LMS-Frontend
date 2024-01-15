@@ -97,7 +97,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
 
             <h5 className='text-center pt-2 font-Poppins text-[14px] text-black dark:text-white'>
                 Go back to sign in?
-                <span onClick={() => setRoute("Login")} className='text-[#2190ff] pl-1 cursor-pointer'>
+                <span onClick={() => {setRoute("Login")}} className='text-[#2190ff] pl-1 cursor-pointer'>
                     Sign in
                 </span>
             </h5>

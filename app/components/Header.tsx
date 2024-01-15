@@ -9,6 +9,7 @@ import CustomModal from '../utils/CustomModal';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Verification from './auth/Verification';
+import { LoginRounded } from '@mui/icons-material';
 
 type Props = {
   open: boolean;
@@ -129,7 +130,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   setOpen={setOpen}
                   activeItem={activeItem}
                   setRoute={setRoute}
-                  component={Verification}
+                  component={Login}
                 />
               )
             }
@@ -165,7 +166,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   setOpen={setOpen}
                   activeItem={activeItem}
                   setRoute={setRoute}
-                  component={SignUp}
+                  component={Verification}
                 />
               )
             }
