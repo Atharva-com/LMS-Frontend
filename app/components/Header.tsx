@@ -5,14 +5,18 @@ import React, { FC, useState } from 'react'
 import NavItems from './NavItems';
 import ThemeSwitcher from './ThemeSwitcher';
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from 'react-icons/hi';
+import CustomModal from '../utils/CustomModal';
+import Login from './auth/Login';
 
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
+  route: string;
+  setRoute: (route: string) => void;
 }
 
-const Header: FC<Props> = ({ activeItem, setOpen }) => {
+const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
 
@@ -112,6 +116,25 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
         }
 
       </div>
+
+      {
+        route === "Login" && (
+          <>
+          {
+            open && (
+              <CustomModal
+                open={open}
+                setOpen={setOpen}
+                activeItem={activeItem}
+                setRoute={setRoute}
+                component={Login}
+               />
+            )
+          }
+          </>
+        )
+      }
+      
 
     </div>
   )
