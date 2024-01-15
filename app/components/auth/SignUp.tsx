@@ -55,7 +55,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
             onChange={handleChange}
           />
 
-          {touched.name && errors.name && <p className={`text-red-500 pt-2 block`}>{errors.name}</p>}
+          {touched.name && errors.name && <p className={`text-red-500 pt-0 block`}>{errors.name}</p>}
         </div>
 
         {/* email */}
@@ -70,10 +70,10 @@ const SignUp: FC<Props> = ({ setRoute }) => {
           onChange={handleChange}
         />
 
-        {touched.email && errors.email && <p className={`text-red-500 pt-2 block`}>{errors.email}</p>}
+        {touched.email && errors.email && <p className={`text-red-500 pt-0 block`}>{errors.email}</p>}
 
         {/* password */}
-        <div className='w-full mt-5 relative mb-1'>
+        <div className='w-full mt-3 relative mb-1'>
 
           <label htmlFor="password" className={`${styles.label}`}>
             Enter your password
@@ -98,29 +98,29 @@ const SignUp: FC<Props> = ({ setRoute }) => {
 
         </div>
 
-        {touched.password && errors.password && <p className={`text-red-500 pt-2 block`}>{errors.password}</p>}
+        {touched.password && errors.password && <p className={`text-red-500 pt-0 block`}>{errors.password}</p>}
 
         {/* submit button */}
-        <div className="w-full mt-5">
+        <div className="w-full mt-3">
           <input type="submit" value="Sign Up" className={`${styles.button}`} />
         </div>
 
         <br />
 
-        <h5 className='text-center pt-4 font-Poppins text-[14px] text-black dark:text-white'>Or join with</h5>
+        <h5 className='text-center pt-2 font-Poppins text-[14px] text-black dark:text-white'>Or join with</h5>
 
         {/* Login with Google or Github */}
-        <div className='flex items-center justify-center my-3'>
+        <div className='flex items-center justify-center my-2'>
 
           <FcGoogle size={30} className='cursor-pointer mr-2' />
 
-          <AiFillGithub size={30} className='cursor-pointer ml-2' />
+          <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' />
 
         </div>
 
-        <h5 className='text-center pt-4 font-Poppins text-[14px]'>
+        <h5 className='text-center pt-2 font-Poppins text-[14px] text-black dark:text-white'>
           Already have an account?{" "}
-          <span className='dark:text-[#46e256] text-[crimson] pl-1 cursor-pointer' onClick={() => setRoute("Sign-up")}>
+          <span className='dark:text-[#46e256] text-[crimson] pl-1 cursor-pointer' onClick={() => setRoute("Login")}>
             Sign in
           </span>
         </h5>

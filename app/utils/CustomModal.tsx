@@ -9,7 +9,7 @@ type Props = {
     setRoute: (route: string) => void;
 }
 
-const CustomModal: FC<Props> = ({ open, activeItem, setOpen, setRoute, component: component }) => {
+const CustomModal: FC<Props> = ({ open, activeItem, setOpen, setRoute, component: Component }) => {
     return (
         <Modal
             open={open}

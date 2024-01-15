@@ -95,11 +95,11 @@ const Login: FC<Props> = ({ setRoute }) => {
 
                     <FcGoogle size={30} className='cursor-pointer mr-2' />
 
-                    <AiFillGithub size={30} className='cursor-pointer ml-2' />
+                    <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' />
 
                 </div>
 
-                <h5 className='text-center pt-4 font-Poppins text-[14px]'>
+                <h5 className='text-center pt-4 font-Poppins text-[14px] text-black dark:text-white'>
                     Don&apos;t have an account?{" "}
                     <span className='dark:text-[#46e256] text-[crimson] pl-1 cursor-pointer' onClick={() => setRoute("Sign-up")}>
                         Register
