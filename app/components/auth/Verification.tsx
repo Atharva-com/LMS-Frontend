@@ -1,7 +1,10 @@
 import { styles } from '@/app/styles/style';
-import React, { FC, useRef, useState } from 'react'
-import { Toast } from 'react-hot-toast'
+import { useActivationMutation } from '../../../redux/features/auth/authApi';
+import React, { FC, useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import { VscWorkspaceTrusted } from 'react-icons/vsc'
+import { useSelector } from 'react-redux';
+import { SyncLoader } from 'react-spinners';
 
 type Props = {
     setRoute: (route: string) => void;
@@ -15,12 +18,34 @@ type VerifyNumber = {
 
 const Verification: FC<Props> = ({ setRoute }) => {
     const [invalidError, setInvalidError] = useState(false)
+    const {token} = useSelector((state: any) => state.auth)
+    const [activation, {isSuccess, error, isLoading, data}] = useActivationMutation()
     const inputRefs = [
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
     ]
+console.log(data, isSuccess, error, isLoading)
+    useEffect(() => {
+      if(data?.success === true) {
+        setRoute("Login")
+        toast.success(data?.message)
+      } else if(data?.success === false) {
+        toast.error(data.message)
+      }
+      if(error){
+        if("data" in error){
+            const errorData = error as any
+            toast.error(errorData.data.message)
+            setInvalidError(true)
+        } else {
+            console.log(error)
+            toast.error("Something went wrong")
+        }
+      }
+    }, [isSuccess, error])
+    
 
     const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
         "0": "",
@@ -30,7 +55,12 @@ const Verification: FC<Props> = ({ setRoute }) => {
     })
 
     const VerificationHandler = async () => {
-        console.log('test')
+        const VerificationNumber = Object.values(verifyNumber).join("")
+        if (VerificationNumber.length !== 4) {
+            setInvalidError(true)
+            return
+        }
+        await activation({activation_Token: token, activation_Code: VerificationNumber})
     }
 
     const handleInputChange = (index: number, value: string) => {
@@ -88,9 +118,10 @@ const Verification: FC<Props> = ({ setRoute }) => {
             <br />
 
             <div className='w-full flex justify-center'>
+                {isLoading ? <SyncLoader size={20} color="#36d7b7" /> :
                 <button onClick={VerificationHandler} className={`${styles.button}`}>
                     Verify OTP
-                </button>
+                </button>}
             </div>
 
             <br />

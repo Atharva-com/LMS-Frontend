@@ -2,6 +2,7 @@ import { apiSlice } from "../api/apiSlice";
 import { userRegistration } from "./authSlice";
 
 type RegistrationResponse = {
+    success: boolean
     message: string;
     activationToken: string;
 }
@@ -25,9 +26,9 @@ export const authApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const result = await queryFulfilled;
+                    console.log(result);
                     dispatch(userRegistration({
-                        // message: result.data.message,
-                        activationToken: result.data.activationToken,
+                        token: result.data.activationToken,
                     }));
                 } catch (error: any) {
                     return console.log(error);
@@ -35,11 +36,11 @@ export const authApi = apiSlice.injectEndpoints({
             }
         }),
 
-        activation: build.mutation<ActivationData, { activation_token: string, activation_code: string }>({
-            query: ({activation_token, activation_code}) => ({
+        activation: build.mutation({
+            query: ({activation_Token, activation_Code}) => ({
                 url: "activate-user",
                 method: "POST",
-                body: {activation_token, activation_code},
+                body: {activation_Token, activation_Code},
             }),
         
         })

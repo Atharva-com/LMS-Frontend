@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { styles } from '../../../app/styles/style'
 import { useRegisterMutation } from '../../../redux/features/auth/authApi'
 import toast from 'react-hot-toast'
+import { SyncLoader } from 'react-spinners'
 
 type Props = {
   setRoute: (route: string) => void;
@@ -21,13 +22,15 @@ const schema = Yup.object().shape({
 const SignUp: FC<Props> = ({ setRoute }) => {
 
   const [show, setShow] = useState(false)
-  const [register, { isError, data, error, isSuccess }] = useRegisterMutation()
-
+  const [register, { data, error, isSuccess, isLoading }] = useRegisterMutation()
+console.log(error, data, isSuccess, isLoading)
   useEffect(() => {
-    if (isSuccess) {
+    if (data?.success === true) {
       const message = data?.message || "Registration successful"
       toast.success(message)
       setRoute("Verification")
+    } else if (data?.success === false) {
+      toast.error(data?.message || "Registration failed")
     }
 
     if (error) {
@@ -123,7 +126,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
 
         {/* submit button */}
         <div className="w-full mt-3">
-          <input type="submit" value="Sign Up" className={`${styles.button}`} />
+          {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={20} color="#36d7b7" /> </div> : <input type="submit" value="Sign Up" className={`${styles.button}`} />}
         </div>
 
         <br />
