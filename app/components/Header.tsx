@@ -10,6 +10,8 @@ import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Verification from './auth/Verification';
 import { LoginRounded } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import Image from 'next/image';
 
 type Props = {
   open: boolean;
@@ -22,7 +24,8 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
-
+  const {user} = useSelector((state: any) => state.auth)
+console.log(user)
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -76,11 +79,26 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 />
               </div>
 
-              <HiOutlineUserCircle
-                size={25}
-                className='cursor-pointer dark:text-white text-black 800px:block hidden'
-                onClick={() => setOpen(true)}
-              />
+              {
+                user ? (
+                  <Link href={'/profile'} className='flex items-center ml-5'>
+                    <Image
+                      src={user?.avatar}
+                      alt="avatar"
+                      className='w-[30px] h-[30px] rounded-full cursor-pointer'
+                    />
+                  </Link>
+                ) : (
+                  
+                    <HiOutlineUserCircle
+                      size={25}
+                      className='cursor-pointer dark:text-white text-black 800px:block hidden'
+                      onClick={() => setOpen(true)}
+                    />
+                    
+                )
+             
+              }
 
             </div>
 

@@ -73,7 +73,7 @@ const Hero = (props: Props) => {
                         src={heroImg}
                         width="616"
                         height="617"
-                        className={"object-contain 1100px:max-w-[90%] w-full 1500px:max-w-[85%] h-[auto] z-[10] 1100px:mix-blend-darken rounded-full bg-[#0d0e29] 1100px:p-12"}
+                        className={"object-contain 1100px:max-w-[90%] w-full 1500px:max-w-[85%] h-[auto] z-[10] 1100px:mix-blend-darken rounded-full bg-[#0d0e29] p-12"}
                         alt="Hero Illustration"
                         loading="eager"
                         placeholder="blur"
