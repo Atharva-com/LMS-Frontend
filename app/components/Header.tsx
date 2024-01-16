@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link';
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import NavItems from './NavItems';
 import ThemeSwitcher from './ThemeSwitcher';
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from 'react-icons/hi';
@@ -9,9 +9,12 @@ import CustomModal from '../utils/CustomModal';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Verification from './auth/Verification';
-import { LoginRounded } from '@mui/icons-material';
+import avatar from '../assests/images/avatar.png';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
+import { useSocialAuthMutation } from '@/redux/features/auth/authApi';
+import { useSession } from 'next-auth/react';
+import toast from 'react-hot-toast';
 
 type Props = {
   open: boolean;
@@ -25,7 +28,23 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
   const {user} = useSelector((state: any) => state.auth)
-console.log(user)
+  const [socialAuth, {isSuccess}] = useSocialAuthMutation()
+  const {data} = useSession()
+
+  useEffect(() => {
+    if(!user){
+      if(data){
+        socialAuth({email: data?.user?.email, name: data?.user?.name, avatar: data?.user?.image})
+      }
+    }
+
+    if(isSuccess){
+      toast.success("Login successful")
+      setOpen(false)
+    }
+  }, [data, user])
+  
+
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -83,8 +102,10 @@ console.log(user)
                 user ? (
                   <Link href={'/profile'} className='flex items-center ml-5'>
                     <Image
-                      src={user?.avatar}
+                      src={user?.avatar || data?.user?.image || avatar}
                       alt="avatar"
+                      width={30}
+                      height={30}
                       className='w-[30px] h-[30px] rounded-full cursor-pointer'
                     />
                   </Link>

@@ -7,6 +7,7 @@ import { styles } from '../../../app/styles/style'
 import { useLoginMutation } from '../../../redux/features/auth/authApi'
 import toast from 'react-hot-toast'
 import { SyncLoader } from 'react-spinners'
+import { signIn } from 'next-auth/react'
 
 type Props = {
     setRoute: (route: string) => void;
@@ -114,9 +115,9 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
                 {/* Login with Google or Github */}
                 <div className='flex items-center justify-center my-3'>
 
-                    <FcGoogle size={30} className='cursor-pointer mr-2' />
+                    <FcGoogle size={30} className='cursor-pointer mr-2' onClick={() => {signIn("google")}} />
 
-                    <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' />
+                    <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' onClick={() => {signIn("github")}} />
 
                 </div>
 
