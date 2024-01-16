@@ -1,12 +1,16 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillGithub } from 'react-icons/ai'
 import { FcGoogle } from 'react-icons/fc'
 import { styles } from '../../../app/styles/style'
+import { useLoginMutation } from '../../../redux/features/auth/authApi'
+import toast from 'react-hot-toast'
+import { SyncLoader } from 'react-spinners'
 
 type Props = {
     setRoute: (route: string) => void;
+    setOpen: (open: boolean) => void;
 }
 
 const schema = Yup.object().shape({
@@ -15,9 +19,10 @@ const schema = Yup.object().shape({
 
 })
 
-const Login: FC<Props> = ({ setRoute }) => {
+const Login: FC<Props> = ({ setRoute, setOpen }) => {
 
     const [show, setShow] = useState(false)
+    const [login, {isLoading, data, error}] = useLoginMutation()
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -25,9 +30,25 @@ const Login: FC<Props> = ({ setRoute }) => {
         },
         validationSchema: schema,
         onSubmit: async ({ email, password }) => {
-            console.log(email, password)
+            await login({email, password})
         }
     })
+
+    useEffect(() => {
+        if (data?.success === true) {
+            const message = data?.message || "Login successful"
+            toast.success(message)
+            setOpen(false)
+          } else if (data?.success === false) {
+            toast.error(data?.message || "Login failed")
+          }
+        if(error) {
+            if ("data" in error) {
+                const errorData = error as any
+                toast.error(errorData.data.message)
+              }
+        }
+    }, [data, error])
 
     const { errors, touched, handleSubmit, handleChange, values } = formik
     return (
@@ -83,7 +104,7 @@ const Login: FC<Props> = ({ setRoute }) => {
 
                 {/* submit button */}
                 <div className="w-full mt-5">
-                    <input type="submit" value="Login" className={`${styles.button}`} />
+                    {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={15} color="#36d7b7" /></div> : <input type="submit" value="Login" className={`${styles.button}`} />}
                 </div>
 
                 <br />

@@ -118,7 +118,7 @@ console.log(data, isSuccess, error, isLoading)
             <br />
 
             <div className='w-full flex justify-center'>
-                {isLoading ? <SyncLoader size={20} color="#36d7b7" /> :
+                {isLoading ? <SyncLoader size={15} color="#36d7b7" /> :
                 <button onClick={VerificationHandler} className={`${styles.button}`}>
                     Verify OTP
                 </button>}

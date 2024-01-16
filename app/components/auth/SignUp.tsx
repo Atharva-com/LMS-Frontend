@@ -22,8 +22,7 @@ const schema = Yup.object().shape({
 const SignUp: FC<Props> = ({ setRoute }) => {
 
   const [show, setShow] = useState(false)
-  const [register, { data, error, isSuccess, isLoading }] = useRegisterMutation()
-console.log(error, data, isSuccess, isLoading)
+  const [register, { data, error, isLoading }] = useRegisterMutation()
   useEffect(() => {
     if (data?.success === true) {
       const message = data?.message || "Registration successful"
@@ -39,7 +38,7 @@ console.log(error, data, isSuccess, isLoading)
         toast.error(errorData.data.message)
       }
     }
-  }, [isSuccess, error])
+  }, [data, error])
 
 
   const formik = useFormik({
@@ -126,7 +125,7 @@ console.log(error, data, isSuccess, isLoading)
 
         {/* submit button */}
         <div className="w-full mt-3">
-          {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={20} color="#36d7b7" /> </div> : <input type="submit" value="Sign Up" className={`${styles.button}`} />}
+          {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={15} color="#36d7b7" /> </div> : <input type="submit" value="Sign Up" className={`${styles.button}`} />}
         </div>
 
         <br />

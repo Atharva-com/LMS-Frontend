@@ -1,24 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    user: null,
-    token: null,
+    user: "",
+    token: "",
 }
 
 const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        userRegistration: (state, action) => {
-            state.user = action.payload.user;
+        userRegistration: (state, action: PayloadAction<{token: string}>) => {
             state.token = action.payload.token;
         },
-        userLoggedIn: (state, action) => {
+        userLoggedIn: (state, action: PayloadAction<{accessToken: string , user: string}>) => {
             state.token = action.payload.accessToken;
             state.user = action.payload.user;
         },
         userLoggedOut: (state) => {
-            state.user = null;
-            state.token = null;
+            state.user = "";
+            state.token = "";
         },
     },
 });
