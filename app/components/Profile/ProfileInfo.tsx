@@ -94,7 +94,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
                             <input
                                 type="text"
-                                className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
+                                className={`${styles.input} !w-[95%] mb-1 800px:mb-0 border-gray-500`}
                                 required
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -108,7 +108,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
                             <input
                                 type="text"
-                                className={`${styles.input} !w-[95%] mb-1 800px:mb-0 cursor-not-allowed`}
+                                className={`${styles.input} !w-[95%] mb-1 800px:mb-0 cursor-not-allowed border-gray-500`}
                                 readOnly
                                 required
                                 value={user?.email}

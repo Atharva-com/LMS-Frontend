@@ -54,7 +54,7 @@ const ChangePassword: FC<Props> = (props) => {
 
                         <input
                             type="password"
-                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black`}
+                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black border-gray-500`}
                             required
                             value={oldPassword}
                             onChange={(e) => setOldPassword(e.target.value)}
@@ -67,7 +67,7 @@ const ChangePassword: FC<Props> = (props) => {
 
                         <input
                             type="password"
-                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black`}
+                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black border-gray-500`}
                             required
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
@@ -80,7 +80,7 @@ const ChangePassword: FC<Props> = (props) => {
 
                         <input
                             type="password"
-                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black`}
+                            className={`${styles.input} !w-[95%] mb-4 800px:mb-0 dark:text-[#fff] text-black border-gray-500`}
                             required
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}

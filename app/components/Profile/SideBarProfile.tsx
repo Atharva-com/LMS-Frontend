@@ -19,7 +19,7 @@ const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
     return (
         <div className='w-full'>
 
-            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-3 800px:px-3 800px:py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-gray-100 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(1)}>
+            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-3 800px:px-3 800px:py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-gray-200 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(1)}>
 
                 <Image
                     src={user?.avatar || avatar ? user?.avatar.url || avatar : avatarDefault}
@@ -34,7 +34,7 @@ const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
                 </h5>
             </div>
 
-            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-4 800px:px-3 800px:py-4 cursor-pointer ${active===2 ? "dark:bg-slate-900 bg-gray-100 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(2)}>
+            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-4 800px:px-3 800px:py-4 cursor-pointer ${active===2 ? "dark:bg-slate-800 bg-gray-200 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(2)}>
 
                 <RiLockPasswordLine size={20}  className='dark:text-white text-black w-[25px] h-[25px]' />
 
@@ -43,7 +43,7 @@ const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
                 </h5>
             </div>
 
-            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-4 800px:px-3 800px:py-4 cursor-pointer ${active===3 ? "dark:bg-slate-900 bg-gray-100 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(3)}>
+            <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-4 800px:px-3 800px:py-4 cursor-pointer ${active===3 ? "dark:bg-slate-800 bg-gray-200 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(3)}>
 
                 <SiCoursera size={20} className='dark:text-white text-black  w-[25px] h-[25px]' />
 
