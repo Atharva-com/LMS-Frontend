@@ -4,18 +4,21 @@ import React, { FC, useState } from 'react'
 import Protected from '../hooks/useProtected'
 import Heading from '@/app/utils/Heading'
 import Header from '@/app/components/Header'
+import Profile from '../components/Profile/Profile'
+import { useSelector } from 'react-redux'
 
 type Props = {}
 
-const Profile: FC<Props> = (props: Props) => {
+const page: FC<Props> = (props: Props) => {
     const [open, setOpen] = useState(false)
     const [activeItem, setActiveItem] = useState(0)
     const [route, setRoute] = useState("Login")
+    const {user} = useSelector((state: any) => state.auth)
     return (
         <div>
             <Protected>
                 <Heading
-                    title="Learning Platform"
+                    title={`${user?.name} profile`}
                     description="It is a platform for students to learn."
                     keywords="Programming, MERN, Development, Redux, Flutter."
                 />
@@ -27,9 +30,11 @@ const Profile: FC<Props> = (props: Props) => {
                     route={route}
                     setRoute={setRoute}
                 />
+
+                <Profile user={user} />
             </Protected>
         </div>
     )
 }
 
-export default Profile
+export default page

@@ -12,9 +12,10 @@ import Verification from './auth/Verification';
 import avatar from '../assests/images/avatar.png';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
-import { useSocialAuthMutation } from '@/redux/features/auth/authApi';
+import { useLogoutQuery, useSocialAuthMutation } from '../../redux/features/auth/authApi';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
+import { truncate } from 'fs';
 
 type Props = {
   open: boolean;
@@ -27,23 +28,35 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
-  const {user} = useSelector((state: any) => state.auth)
-  const [socialAuth, {isSuccess}] = useSocialAuthMutation()
-  const {data} = useSession()
-console.log(user)
+  const { user } = useSelector((state: any) => state.auth)
+  const [socialAuth, { isSuccess }] = useSocialAuthMutation()
+  const { data } = useSession()
+  const [logout, setLogout] = useState(false)
+  const { } = useLogoutQuery(undefined, { skip: !logout ? true : false })
+
   useEffect(() => {
-    if(!user){
-      if(data){
-        socialAuth({email: data?.user?.email, name: data?.user?.name, avatar: data?.user?.image})
+    if (!user) {
+      if (data) {
+        socialAuth({ email: data?.user?.email, name: data?.user?.name, avatar: data?.user?.image })
       }
     }
 
-    if(isSuccess){
-      toast.success("Login successful")
-      setOpen(false)
+    if (data === null) {
+      if (isSuccess) {
+        toast.success("Login successful.")
+        setOpen(false)
+      }
+    }
+
+    if (data === null) {
+      setLogout(true)
+      setTimeout(() => {
+        toast.success("Logout successful.");
+      }, 3000)
+      
     }
   }, [data, user])
-  
+
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -110,15 +123,15 @@ console.log(user)
                     />
                   </Link>
                 ) : (
-                  
-                    <HiOutlineUserCircle
-                      size={25}
-                      className='cursor-pointer dark:text-white text-black 800px:block hidden'
-                      onClick={() => setOpen(true)}
-                    />
-                    
+
+                  <HiOutlineUserCircle
+                    size={25}
+                    className='cursor-pointer dark:text-white text-black 800px:block hidden'
+                    onClick={() => setOpen(true)}
+                  />
+
                 )
-             
+
               }
 
             </div>
