@@ -6,7 +6,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { styles } from '../../../app/styles/style'
 import { useRegisterMutation } from '../../../redux/features/auth/authApi'
 import toast from 'react-hot-toast'
-import { SyncLoader } from 'react-spinners'
+import { HashLoader, SyncLoader } from 'react-spinners'
 
 type Props = {
   setRoute: (route: string) => void;
@@ -125,7 +125,10 @@ const SignUp: FC<Props> = ({ setRoute }) => {
 
         {/* submit button */}
         <div className="w-full mt-3">
-          {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={15} color="#36d7b7" /> </div> : <input type="submit" value="Sign Up" className={`${styles.button}`} />}
+          {isLoading ? <div className={`w-full 800px:w-[250px] h-[40px] border border-[#37a39a] flex items-center justify-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer`}>
+            <HashLoader color='#37a39a' size={30} className='mx-auto' />
+          </div>
+            : <input type="submit" value="Sign Up" className={`${styles.button}`} />}
         </div>
 
         <br />

@@ -38,7 +38,7 @@ const Profile: FC<Props> = ({ user }) => {
   }
   return (
     <div className='w-[85%] flex mx-auto'>
-      <div className={`w-[60px] 800px:w-[310px] h-[350px] dark:bg-slate-900 bg-white bg-opacity-90 border dark:border-[#ffffff1d] border-black dark:rounded-[5px] rounded-lg shadow-xl dark:shadow-sm my-[80px] sticky ${scroll ? "top-[120px]" : "top-[30px]"} left-[30px]`}>
+      <div className={`w-[60px] 800px:w-[310px] h-[359px] dark:bg-slate-900 bg-white bg-opacity-90 border dark:border-[#ffffff1d] border-black dark:rounded-[5px] rounded-lg shadow-xl dark:shadow-sm my-[80px] sticky ${scroll ? "top-[120px]" : "top-[30px]"} left-[30px]`}>
 
         <SideBarProfile user={user} active={active} avatar={avatar} setActive={setActive} logOutHandler={logOutHandler} />
 

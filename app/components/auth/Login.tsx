@@ -6,7 +6,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { styles } from '../../../app/styles/style'
 import { useLoginMutation } from '../../../redux/features/auth/authApi'
 import toast from 'react-hot-toast'
-import { SyncLoader } from 'react-spinners'
+import { HashLoader, SyncLoader } from 'react-spinners'
 import { signIn } from 'next-auth/react'
 
 type Props = {
@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
 const Login: FC<Props> = ({ setRoute, setOpen }) => {
 
     const [show, setShow] = useState(false)
-    const [login, {isLoading, data, error}] = useLoginMutation()
+    const [login, { isLoading, data, error }] = useLoginMutation()
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -31,7 +31,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
         },
         validationSchema: schema,
         onSubmit: async ({ email, password }) => {
-            await login({email, password})
+            await login({ email, password })
         }
     })
 
@@ -40,14 +40,14 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
             const message = data?.message || "Login successful"
             toast.success(message)
             setOpen(false)
-          } else if (data?.success === false) {
+        } else if (data?.success === false) {
             toast.error(data?.message || "Login failed")
-          }
-        if(error) {
+        }
+        if (error) {
             if ("data" in error) {
                 const errorData = error as any
                 toast.error(errorData.data.message)
-              }
+            }
         }
     }, [data, error])
 
@@ -105,7 +105,10 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
 
                 {/* submit button */}
                 <div className="w-full mt-5">
-                    {isLoading ? <div className='flex items-center justify-center w-full'><SyncLoader size={15} color="#36d7b7" /></div> : <input type="submit" value="Login" className={`${styles.button}`} />}
+                    {isLoading ? <div className={`w-full 800px:w-[250px] h-[40px] border border-[#37a39a] flex items-center justify-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer`}>
+                        <HashLoader color='#37a39a' size={30} className='mx-auto' />
+                    </div>
+                        : <input type="submit" value="Login" className={`${styles.button}`} />}
                 </div>
 
                 <br />
@@ -115,9 +118,9 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
                 {/* Login with Google or Github */}
                 <div className='flex items-center justify-center my-3'>
 
-                    <FcGoogle size={30} className='cursor-pointer mr-2' onClick={() => {signIn("google")}} />
+                    <FcGoogle size={30} className='cursor-pointer mr-2' onClick={() => { signIn("google") }} />
 
-                    <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' onClick={() => {signIn("github")}} />
+                    <AiFillGithub size={30} className='cursor-pointer ml-2 text-black dark:text-white' onClick={() => { signIn("github") }} />
 
                 </div>
 

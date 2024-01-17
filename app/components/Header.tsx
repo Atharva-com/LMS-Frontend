@@ -33,7 +33,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const { data } = useSession()
   const [logout, setLogout] = useState(false)
   const { } = useLogoutQuery(undefined, { skip: !logout ? true : false })
-console.log(user, data)
   useEffect(() => {
     if (!user) {
       if (data) {
@@ -116,6 +115,7 @@ console.log(user, data)
                       alt="avatar"
                       width={30}
                       height={30}
+                      style={{border: `${activeItem === 5 ? '2px solid #37a39a' : 'none'}`}}
                       className='w-[30px] h-[30px] rounded-full cursor-pointer object-cover'
                     />
                   </Link>

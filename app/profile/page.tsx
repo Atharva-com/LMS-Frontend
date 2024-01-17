@@ -11,9 +11,9 @@ type Props = {}
 
 const page: FC<Props> = (props: Props) => {
     const [open, setOpen] = useState(false)
-    const [activeItem, setActiveItem] = useState(0)
+    const [activeItem, setActiveItem] = useState(5)
     const [route, setRoute] = useState("Login")
-    const {user} = useSelector((state: any) => state.auth)
+    const { user } = useSelector((state: any) => state.auth)
     return (
         <div>
             <Protected>

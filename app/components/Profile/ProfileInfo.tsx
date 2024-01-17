@@ -2,9 +2,11 @@ import Image from 'next/image';
 import React, { FC, useEffect, useState } from 'react'
 import avatarDefault from '../../assests/images/avatar.png'
 import { AiOutlineCamera } from 'react-icons/ai';
-import { styles } from '@/app/styles/style';
-import { useUpdateAvatarMutation } from '@/redux/features/user/userApi';
-import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import { styles } from '../../../app/styles/style';
+import { useEditProfileMutation, useUpdateAvatarMutation } from '../../../redux/features/user/userApi';
+import { useLoadUserQuery } from '../../../redux/features/api/apiSlice';
+import toast from 'react-hot-toast';
+import { HashLoader } from 'react-spinners';
 
 type Props = {
     avatar: string | null;
@@ -15,6 +17,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user?.name)
     const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation()
     const [loadUser, setLoadUser] = useState(false)
+    const [editProfile, { isSuccess: success, error: profileError, isLoading }] = useEditProfileMutation()
     const { } = useLoadUserQuery(undefined, { skip: loadUser ? false : true })
 
     const imageHandler = async (e: any) => {
@@ -31,17 +34,26 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
         fileReader.readAsDataURL(file)
     }
 
-    const handleSubmit = async (e: any) => { }
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        if (name !== "") {
+            await editProfile({ name })
+        }
+    }
 
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess || success) {
             setLoadUser(true)
         }
 
-        if (error) {
+        if (error || profileError) {
             console.log(error)
         }
-    }, [isSuccess, Error])
+
+        if (success) {
+            toast.success("Profile updated successfully.")
+        }
+    }, [isSuccess, Error, profileError, success])
 
     return (
         <>
@@ -78,7 +90,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
                         <div className='w-[100%]'>
 
-                            <label className='block pb-2'>Full Name</label>
+                            <label className='block'>Full Name</label>
 
                             <input
                                 type="text"
@@ -92,7 +104,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
                         <div className='w-[100%] pt-2'>
 
-                            <label className='block pb-2'>Email Address</label>
+                            <label className='block'>Email Address</label>
 
                             <input
                                 type="text"
@@ -104,7 +116,12 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
                         </div>
 
-                        <input type="submit" value="update" required className={`w-full 800px:w-[250px] h-[40px] border border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer`} />
+                        {isLoading ?
+                        <div  className={`w-full 800px:w-[250px] h-[40px] border border-[#37a39a] flex items-center justify-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer`}>
+                            <HashLoader color='#37a39a' size={30} className='mx-auto' />
+                        </div>
+                            
+                            : <input type="submit" value="Update Profile" required className={`w-full 800px:w-[250px] h-[40px] border border-[#37a39a] text-center dark:text-[#fff] text-black rounded-[3px] mt-8 cursor-pointer`} />}
                     </div>
                 </form>
 

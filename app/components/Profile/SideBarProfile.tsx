@@ -15,7 +15,7 @@ type Props = {
 
 const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHandler }) => {
     return (
-        <div className='w-full mt-2 px-4'>
+        <div className='w-full 800px:px-0 px-4'>
 
             <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-3 800px:px-3 800px:py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-gray-100 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(1)}>
 
