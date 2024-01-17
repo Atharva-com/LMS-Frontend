@@ -20,11 +20,11 @@ const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
             <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-3 800px:px-3 800px:py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-gray-100 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(1)}>
 
                 <Image
-                    src={user?.avatar || avatar ? user?.avatar || avatar : avatarDefault}
+                    src={user?.avatar || avatar ? user?.avatar.url || avatar : avatarDefault}
                     alt="avatar"
                     width={30}
                     height={30}
-                    className='w-[30px] h-[30px] rounded-full cursor-pointer dark:text-white text-black'
+                    className='w-[30px] h-[30px] rounded-full cursor-pointer dark:text-white text-black object-cover'
                 />
 
                 <h5 className='pl-2 800px:block hidden font-Poppins dark:text-white text-black'>

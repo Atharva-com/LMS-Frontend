@@ -33,7 +33,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const { data } = useSession()
   const [logout, setLogout] = useState(false)
   const { } = useLogoutQuery(undefined, { skip: !logout ? true : false })
-
+console.log(user, data)
   useEffect(() => {
     if (!user) {
       if (data) {
@@ -48,11 +48,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
       }
     }
 
-    if (data === null) {
+    if (data === null && user === null) {
       setLogout(true)
-      setTimeout(() => {
-        toast.success("Logout successful.");
-      }, 3000)
       
     }
   }, [data, user])
@@ -115,11 +112,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 user ? (
                   <Link href={'/profile'} className='flex items-center ml-5'>
                     <Image
-                      src={user?.avatar || data?.user?.image || avatar}
+                      src={user?.avatar.url || data?.user?.image || avatar}
                       alt="avatar"
                       width={30}
                       height={30}
-                      className='w-[30px] h-[30px] rounded-full cursor-pointer'
+                      className='w-[30px] h-[30px] rounded-full cursor-pointer object-cover'
                     />
                   </Link>
                 ) : (
