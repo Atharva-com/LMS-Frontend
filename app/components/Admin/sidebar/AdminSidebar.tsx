@@ -83,7 +83,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
           color: "#6870fa !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+          padding: "3px 35px 3px 20px !important",
           opacity: 1,
         },
         "& .pro-menu-item": {
@@ -104,7 +104,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
         }}
       >
         <Menu iconShape='square'>
-          {/* logo and Menu Icon */}
+          {/* logo and Menu Icon */} 
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={
@@ -112,11 +112,8 @@ const AdminSidebar: FC<Props> = (props: Props) => {
                 <ArrowForwardIosIcon />
               ) : undefined
             }
-            style={{
-              margin: "10px 0 20px 0",
-            }}
           >
-            {isCollapsed && (
+            {!isCollapsed && (
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -149,6 +146,8 @@ const AdminSidebar: FC<Props> = (props: Props) => {
                   width={100}
                   height={100}
                   style={{
+                    width: "5rem",
+                    height: "5rem",
                     cursor: "pointer",
                     borderRadius: "50%",
                     objectFit: "cover",

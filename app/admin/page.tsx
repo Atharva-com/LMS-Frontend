@@ -3,6 +3,7 @@
 import React from 'react'
 import Heading from '../utils/Heading'
 import AdminSidebar from '../components/Admin/sidebar/AdminSidebar'
+import DashboardHero from '../components/Admin/DashboardHero'
 
 type Props = {}
 
@@ -20,7 +21,9 @@ const page = (props: Props) => {
                     <AdminSidebar />
                 </div>
 
-                <div className="w-[85%]"></div>
+                <div className="w-[85%]">
+                    <DashboardHero />
+                </div>
             </div>
         </div>
     )
