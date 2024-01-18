@@ -15,7 +15,7 @@ const CourseOptions: FC<Props> = ({active, setActive}) => {
         "Course Preview",
     ]
   return (
-    <div className='w-full flex flex-col items-center'>
+    <div className='w-full 800px:flex hidden flex-col items-center'>
         {
             options.map((option: any, index: number) => (
                 <div 

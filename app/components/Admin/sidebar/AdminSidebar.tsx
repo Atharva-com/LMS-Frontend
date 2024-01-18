@@ -83,13 +83,14 @@ const AdminSidebar: FC<Props> = (props: Props) => {
           color: "#6870fa !important",
         },
         "& .pro-inner-item": {
-          padding: "3px 35px 3px 20px !important",
+          padding: "3px 35px 3px 10px !important",
           opacity: 1,
         },
         "& .pro-menu-item": {
           color: `${theme !== 'dark' && "#000"
             }`,
         },
+        
       }}
       className='!bg-white dark:bg-[#111C43]'
     >
@@ -181,7 +182,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Data"}
             </Typography>
@@ -205,7 +206,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Content"}
             </Typography>
@@ -229,7 +230,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Customization"}
             </Typography>
@@ -261,7 +262,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Controllers"}
             </Typography>
@@ -277,7 +278,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Analytics"}
             </Typography>
@@ -309,7 +310,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
             <Typography
               variant='h5'
               className='!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-Poppins !font-[400]'
-              sx={{ m: "15px 0 5px 25px" }}
+              sx={{ m: "15px 0 5px 15px" }}
             >
               {!isCollapsed && "Extras"}
             </Typography>

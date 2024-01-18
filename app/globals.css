@@ -104,3 +104,15 @@ body {
     transform: translateX(0);
   }
 }
+
+.pro-sidebar.collapsed{
+  min-width: 70px !important;
+}
+
+@media screen and (max-width: 800px) {
+  .pro-sidebar.collapsed{
+    min-width: 54px !important;
+  }
+}
+
+

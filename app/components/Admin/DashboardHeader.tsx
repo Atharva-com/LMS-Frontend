@@ -8,7 +8,7 @@ type Props = {}
 const DashboardHeader:FC<Props> = () => {
     const [open, setOpen] = useState(false)
   return (
-    <div className='w-full flex items-center justify-end p-6 fixed right-0'>
+    <div className='w-full flex items-center justify-end p-2 rounded-b-lg 800px:rounded-none 800px:p-6 fixed right-0 800px:bg-transparent bg-[#0e4579]'>
         <ThemeSwitcher />
 
         <div className='relative cursor-pointer m-2' onClick={()=> setOpen(!open)}>
@@ -21,7 +21,7 @@ const DashboardHeader:FC<Props> = () => {
         </div>
 
         {open && (
-            <div className='w-[350px] h-[50vh] dark:bg-[#111C43] bg-white border border-[#7fffd4] shadow-xl absolute top-16 z-10 rounded-lg'>
+            <div className='w-[290px] 800px:w-[350px] right-[6px] 800px:right-8 h-[50vh] dark:bg-[#111C43] bg-white border border-[#7fffd4] shadow-xl absolute top-16 z-10 rounded-lg'>
                 <h5 className='text-center text-[20px] font-Poppins text-black dark:text-white p-3'>
                     Notifications
                 </h5>

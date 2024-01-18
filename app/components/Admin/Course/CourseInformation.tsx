@@ -56,7 +56,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
         }
     }
     return (
-        <div className='w-[80%] m-auto my-24'>
+        <div className='w-[95%] 800px:w-[80%] m-auto my-24'>
 
             <form onSubmit={handleSubmit} >
 
@@ -97,10 +97,10 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                 <br />
 
                 {/* course price */}
-                <div className='w-full flex justify-between'>
+                <div className='w-full flex flex-col 800px:flex-row justify-between gap-y-4'>
 
                     {/* price */}
-                    <div className='w-[45%]'>
+                    <div className='w-full 800px:w-[45%]'>
                         <label htmlFor="" className={`${styles.label}`}>
                             Course Price
                         </label>
@@ -118,7 +118,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                     </div>
 
                     {/* estimated price */}
-                    <div className='w-[45%]'>
+                    <div className='w-full 800px:w-[45%]'>
                         <label htmlFor="" className={`${styles.label}`}>
                             Estimated Price (optional)
                         </label>
@@ -160,9 +160,9 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                 <br />
 
-                <div className='w-full flex justify-between'>
+                <div className='w-full flex flex-col 800px:flex-row justify-between gap-y-4'>
                     {/* level */}
-                    <div className='w-[45%]'>
+                    <div className='w-full 800px:w-[45%]'>
                         <label htmlFor="" className={`${styles.label}`}>
                             Course Level
                         </label>
@@ -181,7 +181,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                     </div>
 
                     {/* demo url */}
-                    <div className='w-[45%]'>
+                    <div className='w-full 800px:w-[45%]'>
                         <label htmlFor="" className={`${styles.label}`}>
                             Demo URL
                         </label>
@@ -209,12 +209,13 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                     <input
                         type="file" required
                         id='file'
+                        name='thumbnail'
                         accept='image/*'
                         className={`hidden`}
                         onChange={handleFileChange}
                     />
 
-                    <label htmlFor="file" className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center cursor-pointer rounded-lg ${
+                    <label htmlFor="file" className={`w-full min-h-[10vh] dark:border-white border-gray-500 p-3 border flex items-center justify-center cursor-pointer rounded-lg ${
                         dragging ? "bg-blue-500" : "bg-transparent"
                     }`}
                         onDragOver={handleDragOver}
@@ -238,7 +239,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                 {/* submit */}
                 <div className='w-full flex items-center justify-end'>
-                    <input type='submit' value='Next' className={`${styles.button}`}>
+                    <input type='submit' value='Next' className={`${styles.button} !w-fit`}>
                         
                     </input>
                 </div>

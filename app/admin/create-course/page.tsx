@@ -18,7 +18,7 @@ const page = (props: Props) => {
             />
 
             <div className="flex">
-                <div className="1500px:w-[16%] w-1/5">
+                <div className="1500px:w-[16%] w-[15%]">
                     <AdminSidebar />
                 </div>
 
