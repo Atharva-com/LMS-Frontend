@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 type Props = {
     courseContentData: any;
@@ -8,7 +8,15 @@ type Props = {
     setActive: (active: number) => void;
 }
 
-const CourseContent:FC<Props> = ({courseContentData, setCourseContentData, handleSubmit, active, setActive, }) => {
+const CourseContent:FC<Props> = ({courseContentData, setCourseContentData, handleSubmit: handleCourseSubmit, active, setActive, }) => {
+    const [isCollapsed, setIsCollapsed] = useState(
+        Array(courseContentData.length).fill(false)
+    )
+    const [activeSection, setActiveSection] = useState(1)
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+    }
   return (
     <div>CourseContent</div>
   )

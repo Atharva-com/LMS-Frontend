@@ -119,7 +119,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                     {/* estimated price */}
                     <div className='w-full 800px:w-[45%]'>
-                        <label htmlFor="" className={`${styles.label}`}>
+                        <label htmlFor="eprice" className={`${styles.label}`}>
                             Estimated Price (optional)
                         </label>
 
@@ -129,7 +129,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                             value={courseInfo.estimatedPrice}
                             onChange={(e) => setCourseInfo({ ...courseInfo, estimatedPrice: e.target.value })}
                             required
-                            id='price'
+                            id='eprice'
                             className={`${styles.input}`}
                             placeholder='79'
                         />
