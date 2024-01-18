@@ -14,7 +14,7 @@ type Props = {
 
 const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequistes, active, setActive }) => {
     return (
-        <div className='w-[95%] 800px:w-[80%] m-auto mt-24 block'>
+        <div className='w-[95%] sm:w-[90%] 800px:w-[80%] m-auto mt-24 block'>
 
             {/* benefits */}
             <div>
@@ -90,9 +90,9 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequ
                 />
             </div>
 
-            <div className='flex 800px:flex-row flex-col justify-between mt-8 gap-4'>
+            <div className='flex justify-between mt-8 gap-4'>
                 <button
-                    className={`${styles.button} w-fit`}
+                    className={`${styles.button} !w-fit`}
                     onClick={() => {
                         setActive(active - 1)
                     }}
@@ -101,7 +101,7 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequ
                 </button>
 
                 <button
-                    className={`${styles.button} w-fit`}
+                    className={`${styles.button} !w-fit`}
                     onClick={() => {
                         if (benefits[benefits.length - 1].title !== "" && prerequistes[prerequistes.length - 1].title !== "") {
                             setActive(active + 1)

@@ -8,12 +8,12 @@ type Props = {}
 const DashboardHeader:FC<Props> = () => {
     const [open, setOpen] = useState(false)
   return (
-    <div className='w-full flex items-center justify-end p-2 rounded-b-lg 800px:rounded-none 800px:p-6 fixed right-0 800px:bg-transparent bg-[#0e4579]'>
+    <div className='w-full flex items-center justify-end p-2 rounded-b-lg 800px:rounded-none 800px:p-6 fixed right-0 800px:bg-transparent bg-[#111C43]'>
         <ThemeSwitcher />
 
         <div className='relative cursor-pointer m-2' onClick={()=> setOpen(!open)}>
 
-            <IoMdNotificationsOutline className='text-2xl cursor-pointer dark:text-white text-black' />
+            <IoMdNotificationsOutline className='text-2xl cursor-pointer text-white' />
 
             <span className='absolute -top-2 -right-2 bg-[#3ccba0] rounded-full w-[20px] h-[20px] text-[12px] flex items-center justify-center text-white'>
                 3

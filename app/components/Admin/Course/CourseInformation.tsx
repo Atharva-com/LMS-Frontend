@@ -56,7 +56,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
         }
     }
     return (
-        <div className='w-[95%] 800px:w-[80%] m-auto my-24'>
+        <div className='w-[95%] sm:w-[90%] 800px:w-[80%] m-auto my-24'>
 
             <form onSubmit={handleSubmit} >
 
