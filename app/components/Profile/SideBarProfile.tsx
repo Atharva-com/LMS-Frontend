@@ -6,6 +6,7 @@ import { SiCoursera } from 'react-icons/si';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 type Props = {
     user: any;
@@ -16,13 +17,14 @@ type Props = {
 }
 
 const SideBarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHandler }) => {
+    const {data} = useSession()
     return (
         <div className='w-full'>
 
             <div className={`w-full flex items-center 800px:justify-start justify-center px-2 py-3 800px:px-3 800px:py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-gray-200 rounded-lg" : "bg-transparent"}`} onClick={() => setActive(1)}>
 
                 <Image
-                    src={user?.avatar || avatar ? user?.avatar.url || avatar : avatarDefault}
+                    src={user?.avatar || data || avatar ? user?.avatar?.url || data?.user?.image || avatar : avatarDefault}
                     alt="avatar"
                     width={30}
                     height={30}

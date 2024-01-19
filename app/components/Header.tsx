@@ -111,7 +111,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                 user ? (
                   <Link href={'/profile'} className='flex items-center ml-5'>
                     <Image
-                      src={user?.avatar.url || data?.user?.image || avatar}
+                      src={user?.avatar?.url || data?.user?.image || avatar}
                       alt="avatar"
                       width={30}
                       height={30}

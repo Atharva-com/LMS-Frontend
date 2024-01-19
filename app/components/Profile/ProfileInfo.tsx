@@ -7,6 +7,7 @@ import { useEditProfileMutation, useUpdateAvatarMutation } from '../../../redux/
 import { useLoadUserQuery } from '../../../redux/features/api/apiSlice';
 import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
+import { useSession } from 'next-auth/react';
 
 type Props = {
     avatar: string | null;
@@ -17,6 +18,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user?.name)
     const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation()
     const [loadUser, setLoadUser] = useState(false)
+    const {data} = useSession()
     const [editProfile, { isSuccess: success, error: profileError, isLoading }] = useEditProfileMutation()
     const { } = useLoadUserQuery(undefined, { skip: loadUser ? false : true })
 
@@ -63,7 +65,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                 <div className="relative">
 
                     <Image
-                        src={user.avatar || avatar ? user.avatar.url || avatar : avatarDefault}
+                        src={user?.avatar || data || avatar ? user?.avatar?.url || data?.user?.image || avatar : avatarDefault}
                         alt=''
                         width={120}
                         height={120}

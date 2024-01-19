@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 interface itemProps {
   title: string;
@@ -57,6 +58,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
   const { theme, setTheme } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const {data} = useSession()
 
   useEffect(() => {
     setMounted(true)
@@ -142,7 +144,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
               >
 
                 <Image
-                  src={user.avatar ? user.avatar.url : avatarDefault}
+                  src={user.avatar || data?.user ? user?.avatar?.url || data?.user?.image : avatarDefault}
                   alt="avatar"
                   width={100}
                   height={100}

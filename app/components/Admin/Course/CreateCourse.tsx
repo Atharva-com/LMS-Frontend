@@ -5,6 +5,7 @@ import CourseInformation from './CourseInformation'
 import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
+import CoursePreview from './CoursePreview'
 
 type Props = {}
 
@@ -39,11 +40,48 @@ const CreateCourse = (props: Props) => {
         }
     ])
 
-    const [courseData, setcourseData] = useState({})
+    const [courseData, setCourseData] = useState({})
 
     const handleSubmit = async (e: any) => {
-        
+        // format benefits array
+        const formattedBenefits = benefits.map((benefit) => ({ title: benefit.title }))
+
+        // format prerequisites array
+        const formattedPrerequisites = prerequistes.map((prerequisite) => ({ title: prerequisite.title }))
+
+        // format course content array
+        const formattedCourseContent = courseContentData.map((content) => ({
+            videoUrl: content.videoUrl,
+            title: content.title,
+            description: content.description,
+            videoSection: content.videoSection,
+            links: content.links.map((link) => ({
+                title: link.title,
+                url: link.url,
+            })),
+            suggestion: content.suggestion,
+        }))
+
+        // prepare data object
+        const data = {
+            name: courseInfo.name,
+            description: courseInfo.description,
+            price: courseInfo.price,
+            estimatedPrice: courseInfo.estimatedPrice,
+            tags: courseInfo.tags,
+            level: courseInfo.level,
+            demoUrl: courseInfo.demoUrl,
+            thumbnail: courseInfo.thumbnail,
+            totalVideos: courseContentData.length,
+            benefits: formattedBenefits,
+            prerequisites: formattedPrerequisites,
+            courseContent: formattedCourseContent,
+        }
+
+        setCourseData(data)
     }
+
+    const handleCourseCreate = async () => {}
 
     return (
         <div className='w-full flex min-h-screen'>
@@ -73,12 +111,23 @@ const CreateCourse = (props: Props) => {
                     )
                 }
 
-{
+                {
                     active === 2 && (
                         <CourseContent
                             courseContentData={courseContentData}
                             setCourseContentData={setCourseContentData}
                             handleSubmit={handleSubmit}
+                            active={active}
+                            setActive={setActive}
+                        />
+                    )
+                }
+
+{
+                    active === 3 && (
+                        <CoursePreview
+                            courseData={courseData}
+                            handleCourseCreate={handleCourseCreate}
                             active={active}
                             setActive={setActive}
                         />
