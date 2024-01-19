@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import { AiFillStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { BsStarHalf } from 'react-icons/bs';
 
 type Props = {
     rating: number;
@@ -16,11 +17,11 @@ const Ratings:FC<Props> = ({rating}) => {
             )
         }else if (i === Math.ceil(rating) && !Number.isInteger(rating)){
             stars.push(
-                <AiFillStar key={i} color='#FFD700' className="mr-2 cursor-pointer" size={17} />
+                <BsStarHalf key={i} color='#FFD700' className="mr-2 cursor-pointer" size={17} />
             )
         } else {
             stars.push(
-                <AiFillStar key={i} color='#FFD700' className="mr-2 cursor-pointer" size={20} />
+                <AiOutlineStar key={i} color='#FFD700' className="mr-2 cursor-pointer" size={20} />
             )
         }
         

@@ -1,17 +1,20 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CourseInformation from './CourseInformation'
 import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
+import { useCreateCourseMutation } from '@/redux/features/courses/coursesApi'
+import toast from 'react-hot-toast'
+import { redirect } from 'next/navigation'
 
 type Props = {}
 
 const CreateCourse = (props: Props) => {
 
-    const [active, setActive] = useState(2)
+    const [active, setActive] = useState(0)
     const [courseInfo, setCourseInfo] = useState({
         name: '',
         description: '',
@@ -42,6 +45,8 @@ const CreateCourse = (props: Props) => {
 
     const [courseData, setCourseData] = useState({})
 
+    const [createCourse, { isLoading, error, isSuccess, data }] = useCreateCourseMutation()
+    console.log(data, isSuccess, error)
     const handleSubmit = async (e: any) => {
         // format benefits array
         const formattedBenefits = benefits.map((benefit) => ({ title: benefit.title }))
@@ -81,10 +86,32 @@ const CreateCourse = (props: Props) => {
         setCourseData(data)
     }
 
-    const handleCourseCreate = async (e: any) => {
+    const handleCourseCreate = async () => {
         // send data to server
-        console.log(courseData)
+        if (!isLoading) {
+            console.log(courseData)
+            await createCourse(courseData)
+        }
     }
+
+    useEffect(() => {
+
+        if (data) {
+            if (data?.success === true) {
+                toast.success('Course created successfully')
+                redirect('/admin/all-courses')
+            } else if (data?.success === false) {
+                toast.error('Something went wrong.' + data.message)
+            }
+        }
+        if (error) {
+            if ("data" in error) {
+                const errorMessage = error as any
+                toast.error(errorMessage.data.message)
+            }
+        }
+    }, [isSuccess, error])
+
 
     return (
         <div className='w-full flex min-h-screen'>

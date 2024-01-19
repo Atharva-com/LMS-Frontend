@@ -97,7 +97,7 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequ
                         setActive(active - 1)
                     }}
                 >
-                    Back
+                    Prev
                 </button>
 
                 <button

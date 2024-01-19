@@ -110,7 +110,7 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                 <>
                   <div
                     className={`w-full dark:bg-[#cdc8c817] bg-gray-200 p-4 ${showSectionInput ? "mt-10" : "mb-0"
-                      }`}
+                      }`} key={index}
                   >
                     {
                       showSectionInput && (
@@ -360,7 +360,7 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
               setActive(active - 1)
             }}
           >
-            Back
+            Prev
           </button>
 
           <button
