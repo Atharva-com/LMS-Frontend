@@ -81,7 +81,10 @@ const CreateCourse = (props: Props) => {
         setCourseData(data)
     }
 
-    const handleCourseCreate = async () => {}
+    const handleCourseCreate = async (e: any) => {
+        // send data to server
+        console.log(courseData)
+    }
 
     return (
         <div className='w-full flex min-h-screen'>
@@ -123,7 +126,7 @@ const CreateCourse = (props: Props) => {
                     )
                 }
 
-{
+                {
                     active === 3 && (
                         <CoursePreview
                             courseData={courseData}
