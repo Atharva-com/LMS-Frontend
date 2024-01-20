@@ -99,7 +99,7 @@ const CreateCourse = (props: Props) => {
         if (data) {
             if (data?.success === true) {
                 toast.success('Course created successfully')
-                redirect('/admin/all-courses')
+                redirect('/admin/courses')
             } else if (data?.success === false) {
                 toast.error('Something went wrong.' + data.message)
             }

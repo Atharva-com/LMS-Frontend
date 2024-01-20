@@ -1,15 +1,16 @@
 "use client"
 
+import AllCourses from '@/app/components/Admin/Course/AllCourses'
+import DashboardHeader from '@/app/components/Admin/DashboardHeader'
+import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar'
+import Heading from '@/app/utils/Heading'
 import React from 'react'
-import Heading from '../utils/Heading'
-import AdminSidebar from '../components/Admin/sidebar/AdminSidebar'
-import DashboardHero from '../components/Admin/DashboardHero'
 
 type Props = {}
 
 const page = (props: Props) => {
-    return (
-        <div>
+  return (
+    <div>
             
             <Heading
                 title={`Learning - Admin`}
@@ -23,11 +24,13 @@ const page = (props: Props) => {
                 </div>
 
                 <div className="w-[85%]">
-                    <DashboardHero />
+                    <DashboardHeader />
+
+                    <AllCourses />
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
 export default page

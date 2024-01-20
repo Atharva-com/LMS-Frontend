@@ -17,7 +17,7 @@ const page = (props: Props) => {
                 keywords="Programming, MERN, Development, Redux, Flutter."
             />
 
-            <div className="flex">
+            <div className="flex h-[200vh]">
                 <div className="1500px:w-[16%] w-[15%]">
                     <AdminSidebar />
                 </div>
