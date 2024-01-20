@@ -24,7 +24,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     const [open, setOpen] = useState(false)
     const [isUserId, setIsUserId] = useState("")
     const [ deleteUser, {isLoading: deleteUserLoading, data: deleteUserData, error: deleteError }] = useDeleteUserMutation({})
-    const {isLoading, data } = useGetAllUsersQuery({})
+    const {isLoading, data, refetch } = useGetAllUsersQuery({}, {refetchOnMountOrArgChange: true})
     const [updateUserRole, { isLoading: updateLoading, data: updateData, error: updateError }] = useUpdateUserRoleMutation()
 
     const columns = [
@@ -80,7 +80,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                 courses: item.courses.length,
                 created_at: format(item.createdAt)
             })
-        });
+        }); 
     } else {
         data && data.users.forEach((item: any) => {
             rows.push({
@@ -118,12 +118,22 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
             }
         }
 
-        if (updateData?.success === true || deleteUserData?.success === true) {
+        if (updateData?.success === true) {
+            refetch()
             toast.success(updateData.message)
             setActive(false)
-        } else if (updateData?.success === false || deleteUserData?.success === false) {
+        } else if (updateData?.success === false) {
             toast.error(updateData.message)
             setActive(false)
+        }
+
+        if( deleteUserData?.success === true) {
+            refetch() 
+            toast.success(deleteUserData.message)
+            setOpen(false)
+        } else if (deleteUserData?.success === false) {
+            toast.error(deleteUserData.message)
+            setOpen(false)
         }
     }, [updateError, updateData, deleteUserData, deleteError])
 
@@ -237,9 +247,10 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
                         {
                             open && (
+                                
                                 <Modal
-                                    open={active}
-                                    onClose={() => setActive(!active)}
+                                    open={open}
+                                    onClose={() => setOpen(!open)}
                                     aria-labelledby="modal-modal-title"
                                     aria-describedby="modal-modal-description"
                                 >

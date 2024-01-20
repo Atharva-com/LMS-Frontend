@@ -17,7 +17,6 @@ type Props = {}
 const AllCourses:FC<Props> = (props: Props) => {
     const { theme, setTheme } = useTheme()
     const [open, setOpen] = useState(false)
-    const [active, setActive] = useState(false)
     const [isCourseId, setIsCourseId] = useState("")
     const [deleteCourse, {isLoading:courseLoading, error, data: courseData}] = useDeleteCourseMutation({})
     const  {isLoading, data} = useGetAllCoursesQuery({})
@@ -91,10 +90,10 @@ const AllCourses:FC<Props> = (props: Props) => {
 
         if (courseData?.success === true) {
             toast.success(courseData.message)
-            setActive(false)
+            setOpen(false)
         } else if (courseData?.success === false) {
             toast.error(courseData.message)
-            setActive(false)
+            setOpen(false)
         }
     }, [courseData, error])
 
@@ -163,8 +162,8 @@ const AllCourses:FC<Props> = (props: Props) => {
                 {
                             open && (
                                 <Modal
-                                    open={active}
-                                    onClose={() => setActive(!active)}
+                                    open={open}
+                                    onClose={() => setOpen(!open)}
                                     aria-labelledby="modal-modal-title"
                                     aria-describedby="modal-modal-description"
                                 >
