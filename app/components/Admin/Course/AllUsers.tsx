@@ -7,9 +7,10 @@ import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai'
 import { useTheme } from 'next-themes'
 import { FiEdit2 } from 'react-icons/fi'
 import { format } from 'timeago.js'
-import { useGetAllUsersQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi'
+import { useDeleteUserMutation, useGetAllUsersQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi'
 import { HashLoader } from 'react-spinners'
 import { styles } from '@/app/styles/style'
+import toast from 'react-hot-toast'
 
 type Props = {
     isTeam: boolean
@@ -20,8 +21,11 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     const [active, setActive] = useState(false)
     const [email, setEmail] = useState('')
     const [role, setRole] = useState('admin')
-    const { isLoading, data, error } = useGetAllUsersQuery({})
-    const [updateUserRole, { isLoading: updateLoading, data: updateData , error:updateError }] = useUpdateUserRoleMutation()
+    const [open, setOpen] = useState(false)
+    const [isUserId, setIsUserId] = useState("")
+    const [ deleteUser, {isLoading: deleteUserLoading, data: deleteUserData, error: deleteError }] = useDeleteUserMutation({})
+    const {isLoading, data } = useGetAllUsersQuery({})
+    const [updateUserRole, { isLoading: updateLoading, data: updateData, error: updateError }] = useUpdateUserRoleMutation()
 
     const columns = [
         { field: "id", headerName: "ID", flex: 0.3 },
@@ -37,7 +41,10 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
             renderCell: (params: any) => {
                 return (
                     <>
-                        <Button>
+                        <Button onClick={() => {
+                            setOpen(!open)
+                            setIsUserId(params.row.id)
+                        }}>
                             <AiOutlineDelete className='dark:text-white text-black' size={20} />
                         </Button>
                     </>
@@ -87,14 +94,44 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
         });
     }
 
-    const handleSubmit =async () => {
-       await updateUserRole({email, role})
+    const handleSubmit = async () => {
+        await updateUserRole({ email, role })
     }
+
+    const handleDelete = async () => {
+        const id = isUserId
+        await deleteUser(id)
+    }
+
+    useEffect(() => {
+        if (updateError) {
+            if ("data" in updateError) {
+                const errorMessage = updateError as any
+                toast.error(errorMessage.data.message)
+            }
+        }
+
+        if (deleteError) {
+            if ("data" in deleteError) {
+                const errorMessage = deleteError as any
+                toast.error(errorMessage.data.message)
+            }
+        }
+
+        if (updateData?.success === true || deleteUserData?.success === true) {
+            toast.success(updateData.message)
+            setActive(false)
+        } else if (updateData?.success === false || deleteUserData?.success === false) {
+            toast.error(updateData.message)
+            setActive(false)
+        }
+    }, [updateError, updateData, deleteUserData, deleteError])
+
 
     return (
         <div className='mt-[100px]'>
 
-            {isLoading || updateLoading ?
+            {isLoading || updateLoading || deleteUserLoading ?
                 <div className={`flex items-center justify-center w-full h-[50vh]`}>
                     <HashLoader color='#37a39a' size={60} className='mx-auto' />
                 </div>
@@ -180,7 +217,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                                                 className={`${styles.input}`}
                                             />
 
-                                            <select name="" id="" className={`${styles.input} !mt-6`}>
+                                            <select name="" id="" value={role} className={`${styles.input} !mt-6`} onChange={() => setRole(role)} >
                                                 <option value="admin">Admin</option>
                                                 <option value="user">User</option>
                                             </select>
@@ -189,6 +226,36 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
                                             <div className={`${styles.button} my-6 !h-[30px]`} onClick={handleSubmit}>
                                                 Submit
+                                            </div>
+
+                                        </div>
+                                    </Box>
+                                </Modal>
+                            )
+                        }
+
+
+                        {
+                            open && (
+                                <Modal
+                                    open={active}
+                                    onClose={() => setActive(!active)}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white  dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                                        <h1 className={`${styles.title}`}>
+                                            Are you sure you want to delete this user?
+                                        </h1>
+
+                                        <div className="flex w-full items-center justify-between mb-6 mt-4">
+
+                                            <div className={`${styles.button} bg-[#57c7a3] !w-[120px] h-[30px]`} onClick={() => setOpen(false)}>
+                                                Cancel
+                                            </div>
+
+                                            <div className={`${styles.button} bg-[#d63f3f] !w-[120px] h-[30px]`} onClick={handleDelete}>
+                                                Delete
                                             </div>
 
                                         </div>
