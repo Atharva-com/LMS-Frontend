@@ -18,6 +18,7 @@ export const coursesApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+
   }),
 });
 

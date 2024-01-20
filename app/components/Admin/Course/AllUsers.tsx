@@ -3,41 +3,28 @@
 import React, { FC, useEffect } from 'react'
 import {DataGrid} from "@mui/x-data-grid"
 import { Box, Button } from '@mui/material'
-import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai'
 import { useTheme } from 'next-themes'
 import { FiEdit2 } from 'react-icons/fi'
-import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
 import {format} from 'timeago.js'
+import { useGetAllUsersQuery } from '@/redux/features/user/userApi'
 
 type Props = {}
 
-const AllCourses:FC<Props> = (props: Props) => {
+const AllUsers:FC<Props> = (props: Props) => {
     const { theme, setTheme } = useTheme()
 
-    const  {isLoading, data, error} = useGetAllCoursesQuery({})
+    const  {isLoading, data, error} = useGetAllUsersQuery({})
 
     const columns = [
-        {field: "id", headerName: "ID", flex: 0.5},
-        {field: "title", headerName: "Course Title", flex: 1},
-        {field: "ratings", headerName: "Ratings", flex: .3},
-        {field: "purchased", headerName: "Purchased", flex: .3},
-        {field: "created_at", headerName: "Created At", flex: .5},
+        {field: "id", headerName: "ID", flex: 0.3},
+        {field: "name", headerName: "Name", flex: .5},
+        {field: "email", headerName: "Email", flex: .7},
+        {field: "role", headerName: "Role", flex: .3},
+        {field: "courses", headerName: "Purchased Courses", flex: .3},
+        {field: "created_at", headerName: "Joined At", flex: .4},
         {
             field: "",
-            headerName: "Edit",
-            flex: 0.2,
-            renderCell: (params: any) => {
-                return (
-                    <>
-                    <Button>
-                        <FiEdit2 className='dark:text-white text-black' size={20 } />
-                    </Button>
-                    </>
-                )
-            }
-        },
-        {
-            field: " ",
             headerName: "Delete",
             flex: 0.2,
             renderCell: (params: any) => {
@@ -49,6 +36,20 @@ const AllCourses:FC<Props> = (props: Props) => {
                     </>
                 )
             }
+        },
+        {
+            field: " ",
+            headerName: "Email",
+            flex: 0.2,
+            renderCell: (params: any) => {
+                return (
+                    <>
+                    <a href={`mailto: ${params.row.email}`}>
+                        <AiOutlineMail className='dark:text-white text-black' size={20 } />
+                    </a>
+                    </>
+                )
+            }
         }
     ]
 
@@ -57,12 +58,13 @@ const AllCourses:FC<Props> = (props: Props) => {
     ]
 
     {
-        data && data.courses.forEach((item: any) => {
+        data && data.users.forEach((item: any) => {
             rows.push({
                 id: item._id,
-                title: item.name,
-                ratings: item.ratings,
-                purchased: item.purchased,
+                name: item.name,
+                email: item.email,
+                role: item.role,
+                courses: item.courses.length,
                 created_at: format(item.createdAt)
             })
         });
@@ -129,4 +131,4 @@ const AllCourses:FC<Props> = (props: Props) => {
   )
 }
 
-export default AllCourses
+export default AllUsers
