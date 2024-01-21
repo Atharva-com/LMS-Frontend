@@ -1,20 +1,25 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import CourseInformation from './CourseInformation'
 import CourseOptions from './CourseOptions'
 import CourseData from './CourseData'
 import CourseContent from './CourseContent'
 import CoursePreview from './CoursePreview'
-import { useCreateCourseMutation } from '@/redux/features/courses/coursesApi'
+import { useEditCourseMutation, useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
 import toast from 'react-hot-toast'
 import { redirect } from 'next/navigation'
 
-type Props = {}
+type Props = {
+    id: string
+}
 
-const EditCourse = (props: Props) => {
-
+const EditCourse: FC<Props> = ({ id }) => {
+    const [editCourse, {isLoading:editLoading, data:editData, error}] = useEditCourseMutation()
+    const { data, refetch } = useGetAllCoursesQuery({}, { refetchOnMountOrArgChange: true })
+    const editCourseData = data && data.courses.find((course: any) => course._id === id)
     const [active, setActive] = useState(0)
+    
     const [courseInfo, setCourseInfo] = useState({
         name: '',
         description: '',
@@ -45,8 +50,7 @@ const EditCourse = (props: Props) => {
 
     const [courseData, setCourseData] = useState({})
 
-    const [createCourse, { isLoading, error, isSuccess, data }] = useCreateCourseMutation()
-    console.log(data, isSuccess, error)
+    
     const handleSubmit = async (e: any) => {
         // format benefits array
         const formattedBenefits = benefits.map((benefit) => ({ title: benefit.title }))
@@ -86,21 +90,42 @@ const EditCourse = (props: Props) => {
         setCourseData(data)
     }
 
+    useEffect(() => {
+
+        if(editCourseData){
+            setCourseInfo({
+                name: editCourseData?.name,
+                description: editCourseData?.description,
+                price: editCourseData?.price,
+                estimatedPrice: editCourseData?.estimatedPrice,
+                tags: editCourseData?.tags,
+                level: editCourseData?.level,
+                demoUrl: editCourseData?.demoUrl,
+                thumbnail: editCourseData?.thumbnail?.url,
+            })
+            setBenefits(editCourseData.benefits)
+            setPrerequistes(editCourseData.prerequisites)
+            setCourseContentData(editCourseData.courseData)
+        }
+      
+    }, [editCourseData])
+
     const handleCourseCreate = async () => {
         // send data to server
-        if (!isLoading) {
-            console.log(courseData)
-            await createCourse(courseData)
+        if (!editLoading) {
+            const data = courseData
+            await editCourse({id: editCourseData._id, data})
         }
     }
 
     useEffect(() => {
 
-        if (data) {
-            if (data?.success === true) {
-                toast.success('Course created successfully')
+        if (editData) {
+            if (editData.success === true) {
+                refetch()
+                toast.success(data.message)
                 redirect('/admin/live-course')
-            } else if (data?.success === false) {
+            } else if (editData?.success === false) {
                 toast.error('Something went wrong.' + data.message)
             }
         }
@@ -110,7 +135,7 @@ const EditCourse = (props: Props) => {
                 toast.error(errorMessage.data.message)
             }
         }
-    }, [isSuccess, error])
+    }, [editData, error])
 
 
     return (
@@ -160,6 +185,7 @@ const EditCourse = (props: Props) => {
                             handleCourseCreate={handleCourseCreate}
                             active={active}
                             setActive={setActive}
+                            edit={true}
                         />
                     )
                 }

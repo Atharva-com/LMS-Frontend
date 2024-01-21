@@ -1,4 +1,6 @@
 
+"use client"
+
 import EditCourse from '@/app/components/Admin/Course/EditCourse'
 import DashboardHero from '@/app/components/Admin/DashboardHero'
 import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar'
@@ -7,7 +9,8 @@ import React from 'react'
 
 type Props = {}
 
-const page = (props: Props) => {
+const page = ({params}: any) => {
+    const id = params.id
   return (
     <div>
         <Heading
@@ -24,7 +27,7 @@ const page = (props: Props) => {
                 <div className="w-[85%]">
                     <DashboardHero />
 
-                    <EditCourse />
+                    <EditCourse id={id} />
                 </div>
             </div>
     </div>

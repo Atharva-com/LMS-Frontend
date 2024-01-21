@@ -8,10 +8,11 @@ type Props = {
     active: number;
     setActive: (active: number) => void;
     courseData: any;
-    handleCourseCreate: any
+    handleCourseCreate: any;
+    edit: boolean;
 }
 
-const CoursePreview: FC<Props> = ({ active, setActive, courseData, handleCourseCreate }) => {
+const CoursePreview: FC<Props> = ({ active, setActive, courseData, handleCourseCreate, edit }) => {
 
     const discountPercentagePrice = () => {
         const discount = courseData?.estimatedPrice - courseData?.price;
@@ -179,7 +180,7 @@ const CoursePreview: FC<Props> = ({ active, setActive, courseData, handleCourseC
                             handleCourseCreate
                         }
                     >
-                        Create
+                        {edit ? 'Update' : 'Create'}
                     </button>
                 </div>
             </div>

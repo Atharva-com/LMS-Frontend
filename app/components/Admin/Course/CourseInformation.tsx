@@ -207,7 +207,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                 <div>
 
                     <input
-                        type="file" required
+                        type="file"
                         id='file'
                         name='thumbnail'
                         accept='image/*'

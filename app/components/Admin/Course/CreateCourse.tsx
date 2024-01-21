@@ -46,7 +46,6 @@ const CreateCourse = (props: Props) => {
     const [courseData, setCourseData] = useState({})
 
     const [createCourse, { isLoading, error, isSuccess, data }] = useCreateCourseMutation()
-    console.log(data, isSuccess, error)
     const handleSubmit = async (e: any) => {
         // format benefits array
         const formattedBenefits = benefits.map((benefit) => ({ title: benefit.title }))
@@ -89,7 +88,6 @@ const CreateCourse = (props: Props) => {
     const handleCourseCreate = async () => {
         // send data to server
         if (!isLoading) {
-            console.log(courseData)
             await createCourse(courseData)
         }
     }
@@ -98,7 +96,7 @@ const CreateCourse = (props: Props) => {
 
         if (data) {
             if (data?.success === true) {
-                toast.success('Course created successfully')
+                toast.success(data.message)
                 redirect('/admin/live-course')
             } else if (data?.success === false) {
                 toast.error('Something went wrong.' + data.message)
@@ -160,6 +158,7 @@ const CreateCourse = (props: Props) => {
                             handleCourseCreate={handleCourseCreate}
                             active={active}
                             setActive={setActive}
+                            edit={false}
                         />
                     )
                 }
