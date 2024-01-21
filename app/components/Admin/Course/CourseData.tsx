@@ -36,8 +36,13 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequ
                                 value={benefit.title}
                                 required
                                 onChange={(e) => {
-                                    const newBenefits = [...benefits]
-                                    newBenefits[index].title = e.target.value
+                                    let newBenefits = [...benefits]
+                                    newBenefits = newBenefits.map((item, i) => {
+                                        if (i === index) {
+                                          return { ...item, title: e.target.value };
+                                        }
+                                        return item;
+                                      });
                                     setBenefits(newBenefits)
                                 }}
                             />
@@ -73,8 +78,13 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequistes, setPrerequ
                                 value={prerequiste.title}
                                 required
                                 onChange={(e) => {
-                                    const newPrerequistes = [...prerequistes]
-                                    newPrerequistes[index].title = e.target.value
+                                    let newPrerequistes = [...prerequistes]
+                                    newPrerequistes = newPrerequistes.map((item, i) => {
+                                        if (i === index) {
+                                          return { ...item, title: e.target.value };
+                                        }
+                                        return item;
+                                      });
                                     setPrerequistes(newPrerequistes)
                                 }}
                             />

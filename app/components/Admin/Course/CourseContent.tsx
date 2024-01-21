@@ -202,8 +202,13 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                               placeholder='Project Plan...'
                               value={item.title}
                               onChange={(e) => {
-                                const newCourseContentData = [...courseContentData]
-                                newCourseContentData[index].title = e.target.value
+                                let newCourseContentData = [...courseContentData]
+                                newCourseContentData = newCourseContentData.map((item, i) => {
+                                  if (i === index) {
+                                    return { ...item, title: e.target.value };
+                                  }
+                                  return item;
+                                });
                                 setCourseContentData(newCourseContentData)
                               }}
                             />
@@ -221,8 +226,13 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                               placeholder='https://www.youtube.com/watch?...'
                               value={item.videoUrl}
                               onChange={(e) => {
-                                const newCourseContentData = [...courseContentData]
-                                newCourseContentData[index].videoUrl = e.target.value
+                                let newCourseContentData = [...courseContentData]
+                                newCourseContentData = newCourseContentData.map((item, i) => {
+                                  if (i === index) {
+                                    return { ...item, videoUrl: e.target.value };
+                                  }
+                                  return item;
+                                });
                                 setCourseContentData(newCourseContentData)
                               }}
                             />
@@ -241,8 +251,13 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                               placeholder='the video specifies and related properties...'
                               value={item.description}
                               onChange={(e) => {
-                                const newCourseContentData = [...courseContentData]
-                                newCourseContentData[index].description = e.target.value
+                                let newCourseContentData = [...courseContentData]
+                                newCourseContentData = newCourseContentData.map((item, i) => {
+                                  if (i === index) {
+                                    return { ...item, description: e.target.value };
+                                  }
+                                  return item;
+                                });
                                 setCourseContentData(newCourseContentData)
                               }}
                             />
@@ -275,8 +290,16 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                                   placeholder='Source Code...(Link title)'
                                   value={link.title}
                                   onChange={(e) => {
-                                    const newCourseContentData = [...courseContentData]
-                                    newCourseContentData[index].links[linkIndex].title = e.target.value
+                                    let newCourseContentData = [...courseContentData]
+                                    const updatedLink = { ...link, title: e.target.value };
+                                    newCourseContentData = newCourseContentData.map((item, i) => {
+                                      if (i === index) {
+                                        const newLinks = [...item.links];
+                                        newLinks[linkIndex] = updatedLink;
+                                        return { ...item, links: newLinks };
+                                      }
+                                      return item;
+                                    });
                                     setCourseContentData(newCourseContentData)
                                   }}
                                 />
