@@ -275,7 +275,6 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                                   placeholder='Source Code...(Link title)'
                                   value={link.title}
                                   onChange={(e) => {
-                                    console.log(courseContentData[index].links[linkIndex].title)
                                     const newCourseContentData = [...courseContentData]
                                     newCourseContentData[index].links[linkIndex].title = e.target.value
                                     setCourseContentData(newCourseContentData)
