@@ -1,8 +1,8 @@
 "use client"
 
-import AllUsers from '@/app/components/Admin/Course/AllUsers'
 import DashboardHero from '@/app/components/Admin/DashboardHero'
 import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar'
+import EditHero from '@/app/components/customization/EditHero'
 import Heading from '@/app/utils/Heading'
 import React from 'react'
 
@@ -25,7 +25,7 @@ const page = (props: Props) => {
                 <div className="w-[85%]">
                     <DashboardHero />
 
-                    <AllUsers isTeam={false} />
+                    <EditHero />
                 </div>
             </div>
     </div>
