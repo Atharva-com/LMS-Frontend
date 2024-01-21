@@ -11,6 +11,7 @@ import {format} from 'timeago.js'
 import { HashLoader } from 'react-spinners'
 import toast from 'react-hot-toast'
 import { styles } from '@/app/styles/style'
+import Link from 'next/link'
 
 type Props = {}
 
@@ -19,8 +20,7 @@ const AllCourses:FC<Props> = (props: Props) => {
     const [open, setOpen] = useState(false)
     const [isCourseId, setIsCourseId] = useState("")
     const [deleteCourse, {isLoading:courseLoading, error, data: courseData}] = useDeleteCourseMutation({})
-    const  {isLoading, data} = useGetAllCoursesQuery({})
-
+    const  {isLoading, data, refetch} = useGetAllCoursesQuery({}, {refetchOnMountOrArgChange: true})
     const columns = [
         {field: "id", headerName: "ID", flex: 0.5},
         {field: "title", headerName: "Course Title", flex: 1},
@@ -34,9 +34,9 @@ const AllCourses:FC<Props> = (props: Props) => {
             renderCell: (params: any) => {
                 return (
                     <>
-                    <Button>
+                    <Link href={`/admin/edit-course/${params.row.id}`}>
                         <FiEdit2 className='dark:text-white text-black' size={20 } />
-                    </Button>
+                    </Link>
                     </>
                 )
             }
@@ -89,6 +89,7 @@ const AllCourses:FC<Props> = (props: Props) => {
         }
 
         if (courseData?.success === true) {
+            refetch()
             toast.success(courseData.message)
             setOpen(false)
         } else if (courseData?.success === false) {

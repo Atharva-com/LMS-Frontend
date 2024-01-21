@@ -12,7 +12,7 @@ import { redirect } from 'next/navigation'
 
 type Props = {}
 
-const CreateCourse = (props: Props) => {
+const EditCourse = (props: Props) => {
 
     const [active, setActive] = useState(0)
     const [courseInfo, setCourseInfo] = useState({
@@ -173,4 +173,4 @@ const CreateCourse = (props: Props) => {
     )
 }
 
-export default CreateCourse
+export default EditCourse

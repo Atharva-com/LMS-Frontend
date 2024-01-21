@@ -1,7 +1,6 @@
-"use client"
 
-import CreateCourse from '@/app/components/Admin/Course/CreateCourse'
-import DashboardHeader from '@/app/components/Admin/DashboardHeader'
+import EditCourse from '@/app/components/Admin/Course/EditCourse'
+import DashboardHero from '@/app/components/Admin/DashboardHero'
 import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar'
 import Heading from '@/app/utils/Heading'
 import React from 'react'
@@ -23,9 +22,9 @@ const page = (props: Props) => {
                 </div>
 
                 <div className="w-[85%]">
-                    <DashboardHeader />
+                    <DashboardHero />
 
-                    <CreateCourse />
+                    <EditCourse />
                 </div>
             </div>
     </div>
