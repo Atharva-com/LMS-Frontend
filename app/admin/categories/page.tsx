@@ -2,7 +2,7 @@
 
 import DashboardHero from '@/app/components/Admin/DashboardHero'
 import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar'
-import EditFaq from '@/app/components/customization/EditFaq'
+import EditCategories from '@/app/components/customization/EditCategories'
 import Heading from '@/app/utils/Heading'
 import React from 'react'
 
@@ -25,7 +25,7 @@ const page = (props: Props) => {
                 <div className="w-[85%]">
                     <DashboardHero />
 
-                    <EditFaq />
+                    <EditCategories />
                 </div>
             </div>
     </div>

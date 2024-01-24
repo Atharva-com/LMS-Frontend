@@ -11,22 +11,15 @@ const EditHero: FC<Props> = (props: Props) => {
     const [image, setImage] = useState("")
     const [title, setTitle] = useState("")
     const [subTitle, setSubTitle] = useState("")
-    const [editHeroLayout, { isLoading, data: editedData, error }] = useEditHeroLayoutMutation()
+    const [editHeroLayout, { isLoading, data: editedData, error, isSuccess }] = useEditHeroLayoutMutation()
     const { data, refetch } = useGetHeroDataQuery("Banner", { refetchOnMountOrArgChange: true })
     console.log(editedData)
     useEffect(() => {
-        if (data) {
-            refetch()
-            setImage(data?.layout?.banner?.image?.url)
-            setTitle(data?.layout?.banner.title)
-            setSubTitle(data?.layout?.banner.subTitle)
-        }
-
-        if (editedData) {
-            if (editedData?.status === 'success') {
-                refetch()
+        if (isSuccess) {
+            if (editedData?.success === true) {
                 toast.success('Data updated successfully.')
-            } else if (editedData?.status === 'failed') {
+                
+            } else if (editedData?.success === 'false') {
                 toast.error('Failed to update data.')
             }
         }
@@ -38,7 +31,14 @@ const EditHero: FC<Props> = (props: Props) => {
             }
 
         }
-    }, [data, editedData, error])
+
+        if (data) {
+            refetch()
+            setImage(data?.layout?.banner?.image?.url)
+            setTitle(data?.layout?.banner.title)
+            setSubTitle(data?.layout?.banner.subTitle)
+        }
+    }, [data, editedData, error, isSuccess])
 
     const handleUpdate = (e: any) => {
         const file = e.target.files?.[0]
