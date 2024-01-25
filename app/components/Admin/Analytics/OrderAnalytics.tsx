@@ -142,7 +142,7 @@ const OrderAnalytics: FC<Props> = ({isDashboard}) => {
                     </div>
                     :
                     (
-                        <div className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] bg-[#147fe9] shadow-sm pb-5 rounded-sm"}`}>
+                        <div className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] bg-[#3ccba0] shadow-sm pb-5 rounded-sm"}`}>
 
                             <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
                                 <h1 className={`${styles.title} ${isDashboard && '!text-[20px]'} px-5 !text-start`}>
