@@ -68,21 +68,30 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
             ]),
     ]
 
-    const rows: any = []
+    const rows: any = [
+        {
+            id: 'scr32543221',
+            userName: 'John Doe',
+            userEmail: 'xyz@example.com.',
+            title: 'React js',
+            price: 200,
+            createdAt: '12/10/2021',
+        }
+    ]
 
-    orderData && orderData.forEach((item: any) => {
-        rows.push({
-            id: item._id,
-            userName: item.userName,
-            userEmail: item.userEmail,
-            title: item.title,
-            price: item.price,
-            createdAt: item.createdAt,
-        })
-    })
+    // orderData && orderData.forEach((item: any) => {
+    //     rows.push({
+    //         id: item._id,
+    //         userName: item.userName,
+    //         userEmail: item.userEmail,
+    //         title: item.title,
+    //         price: item.price,
+    //         createdAt: item.createdAt,
+    //     })
+    // })
 
     return (
-        <div className={!isDashboard ? 'mt-[120px]' : 'mt-[0px]'}>
+        <div className={!isDashboard ? 'mt-[40px]' : 'mt-[0px]'}>
 
             {
                 isLoading ?
@@ -90,7 +99,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
                         <HashLoader color='#37a39a' size={40} className='mx-auto' />
                     </div>
                     :
-                    <Box m={isDashboard ? "0" : "40px 0 0 0"}>
+                    <Box m={isDashboard ? "0" : "40px 30px 0 30px"}>
                         <Box
                             m={isDashboard ? "0" : "40px 0 0 0"}
                             height={isDashboard ? "35vh" : "90vh"}

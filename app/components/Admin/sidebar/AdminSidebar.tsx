@@ -26,6 +26,7 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 interface itemProps {
   title: string;
@@ -36,10 +37,11 @@ interface itemProps {
 }
 
 const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
+  const router = usePathname()
   return (
     <MenuItem
       icon={icon}
-      active={selected === title}
+      active={router?.endsWith(title)}
       onClick={() => setSelected(title)}
     >
       <Typography className='!text-[16px] !font-Poppins'> {title} </Typography>
@@ -54,7 +56,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
 
   const { user } = useSelector((state: any) => state.auth)
   const [logout, setLogout] = useState(false)
-  const [selected, setSelected] = useState('Dashboard')
+  const [selected, setSelected] = useState('admin')
   const { theme, setTheme } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -175,7 +177,7 @@ const AdminSidebar: FC<Props> = (props: Props) => {
           <Box paddingLeft={isCollapsed ? undefined : '10%'}>
             <Item
               title='Dashboard'
-              to='/admin/dashboard'
+              to='/admin'
               icon={<HomeOutlineIcon />}
               selected={selected}
               setSelected={setSelected}
