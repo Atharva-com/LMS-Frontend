@@ -14,14 +14,14 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
     console.log(data)
     const analyticsData: any = []
 
-    data && data.course.last12Months.forEach((item: any) => {
+    data && data.order.last12Months.forEach((item: any) => {
         analyticsData.push(item.count)
 
     })
 
     const analyticsLabels: any = []
 
-    data && data.course.last12Months.forEach((item: any) => {
+    data && data.order.last12Months.forEach((item: any) => {
         analyticsLabels.push(item.month)
 
     })
@@ -62,6 +62,34 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                     'rgb(255, 255, 0)',           // Yellow
                     'rgb(255, 0, 255)',           // Magenta
                 ],
+                hoverBackgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)',
+                    'rgb(255, 0, 0)',             // Red
+                    'rgb(0, 255, 0)',             // Green
+                    'rgb(0, 0, 255)',             // Blue
+                    'rgb(255, 255, 0)',           // Yellow
+                    'rgb(255, 0, 255)',
+                ],
+                hoverBorderColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    'rgba(255, 0, 0, 0.2)',       // Red
+                    'rgba(0, 255, 0, 0.2)',       // Green
+                    'rgba(0, 0, 255, 0.2)',       // Blue
+                    'rgba(255, 255, 0, 0.2)',     // Yellow
+                    'rgba(255, 0, 255, 0.2)',
+                ],
                 borderWidth: 1,
             },
         ],
@@ -70,14 +98,6 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
     const lineOptions = {
         scales: {
             x: {
-                title: {
-                    display: true,
-                    text: 'Month',
-                    color: '#3ccba0', // Change the color of x-axis label
-                    font: {
-                        size: 16, // Increase font size
-                    },
-                },
                 ticks: {
                     color: '#fff', // Change the color of x-axis ticks
                     font: {
@@ -87,18 +107,12 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                 grid: {
                     color: '#111827', // Set the grid color for the x-axis
                 },
+                border: {
+                    color: '#fff'
+                  }
             },
             y: {
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Total Courses',
-                    color: '#3ccba0', // Change the color of y-axis label
-                    font: {
-                        size: 16, // Increase font size
-                    },
-                },
-
                 ticks: {
                     color: '#fff', // Change the color of y-axis ticks
                     font: {
@@ -109,6 +123,9 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                 grid: {
                     color: '#111827', // Set the grid color for the x-axis
                 },
+                border: {
+                    color: '#fff'
+                  }
 
             },
         },
@@ -123,7 +140,7 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                     </div>
                     :
                     (
-                        <div className='min-h-screen'>
+                        <div className=''>
 
                             <div className='mt-[50px]'>
                                 <h1 className={`${styles.title} px-5 !text-start`}>
@@ -135,7 +152,7 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                                 </p>
                             </div>
 
-                            <div className='w-full min-h-[80vh] flex items-center justify-center'>
+                            <div className='w-full flex items-center justify-center'>
 
                                 <div className='w-full h-[500px] m-auto 800px:w-[900px] 800px:h-[600px]'>
                                     <Bar data={lineData} options={lineOptions} />

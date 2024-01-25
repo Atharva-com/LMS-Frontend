@@ -1,25 +1,27 @@
 import React, { FC } from 'react'
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { HashLoader } from 'react-spinners'
-import { useGetCoursesAnalyticsQuery } from '@/redux/features/analytics/analyticsApi'
+import { useGetUsersAnalyticsQuery } from '@/redux/features/analytics/analyticsApi'
 import { styles } from '@/app/styles/style'
 
-type Props = {}
+type Props = {
+    isDashboard: boolean
+}
 
-const CourseAnalytics: FC<Props> = (props: Props) => {
+const UsersAnalytics: FC<Props> = ({isDashboard}) => {
     ChartJS.register(...registerables);
-    const { data, isLoading } = useGetCoursesAnalyticsQuery({})
+    const { data, isLoading } = useGetUsersAnalyticsQuery({})
     const analyticsData: any = []
 
-    data && data.course.last12Months.forEach((item: any) => {
+    data && data.user.last12Months.forEach((item: any) => {
         analyticsData.push(item.count)
 
     })
 
     const analyticsLabels: any = []
 
-    data && data.course.last12Months.forEach((item: any) => {
+    data && data.user.last12Months.forEach((item: any) => {
         analyticsLabels.push(item.month)
 
     })
@@ -98,13 +100,13 @@ const CourseAnalytics: FC<Props> = (props: Props) => {
         scales: {
             x: {
                 ticks: {
-                    color: '#fff', // Change the color of x-axis ticks
+                    color: '#fff', 
                     font: {
-                        size: 12, // Increase font size
+                        size: 12,
                     },
                 },
                 grid: {
-                    color: '#111827', // Set the grid color for the x-axis
+                    color: '#111827', 
                 },
                 border: {
                     color: '#fff'
@@ -113,20 +115,21 @@ const CourseAnalytics: FC<Props> = (props: Props) => {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    color: '#fff', // Change the color of y-axis ticks
+                    color: '#fff', 
                     font: {
-                        size: 12, // Increase font size
+                        size: 12,
                     },
                     stepSize: 1,
                 },
                 grid: {
-                    color: '#111827', // Set the grid color for the x-axis
+                    color: '#111827',
                 },
                 border: {
                     color: '#fff'
                   }
             },
         },
+        
 
     };
     return (
@@ -138,11 +141,11 @@ const CourseAnalytics: FC<Props> = (props: Props) => {
                     </div>
                     :
                     (
-                        <div className=''>
+                        <div className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] shadow-sm pb-5 rounded-sm"}`}>
 
-                            <div className='mt-[50px]'>
-                                <h1 className={`${styles.title} px-5 !text-start`}>
-                                    Course Analytics
+                            <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
+                                <h1 className={`${styles.title} ${isDashboard && '!text-[20px]'} px-5 !text-start`}>
+                                    Users Analytics
                                 </h1>
 
                                 <p className={`${styles.label} px-5`}>
@@ -153,7 +156,7 @@ const CourseAnalytics: FC<Props> = (props: Props) => {
                             <div className='w-full flex items-center justify-center'>
 
                                 <div className='w-full h-full m-auto 800px:w-[900px] 800px:h-[600px]'>
-                                    <Bar data={lineData} options={lineOptions} />
+                                    <Line data={lineData} options={lineOptions} />
                                 </div>
 
                             </div>
@@ -165,4 +168,4 @@ const CourseAnalytics: FC<Props> = (props: Props) => {
     )
 }
 
-export default CourseAnalytics
+export default UsersAnalytics
