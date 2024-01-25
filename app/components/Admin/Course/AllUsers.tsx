@@ -5,7 +5,6 @@ import { DataGrid } from "@mui/x-data-grid"
 import { Box, Button, Modal } from '@mui/material'
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai'
 import { useTheme } from 'next-themes'
-import { FiEdit2 } from 'react-icons/fi'
 import { format } from 'timeago.js'
 import { useDeleteUserMutation, useGetAllUsersQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi'
 import { HashLoader } from 'react-spinners'

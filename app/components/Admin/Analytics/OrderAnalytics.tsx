@@ -5,9 +5,11 @@ import { HashLoader } from 'react-spinners'
 import { useGetOrdersAnalyticsQuery } from '@/redux/features/analytics/analyticsApi'
 import { styles } from '@/app/styles/style'
 
-type Props = {}
+type Props = {
+    isDashboard?: boolean
+}
 
-const OrderAnalytics: FC<Props> = (props: Props) => {
+const OrderAnalytics: FC<Props> = ({isDashboard}) => {
 
     ChartJS.register(...registerables);
     const { data, isLoading } = useGetOrdersAnalyticsQuery({})
@@ -140,10 +142,10 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
                     </div>
                     :
                     (
-                        <div className=''>
+                        <div className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] shadow-sm pb-5 rounded-sm"}`}>
 
-                            <div className='mt-[50px]'>
-                                <h1 className={`${styles.title} px-5 !text-start`}>
+                            <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
+                                <h1 className={`${styles.title} ${isDashboard && '!text-[20px]'} px-5 !text-start`}>
                                     Orders Analytics
                                 </h1>
 
@@ -154,7 +156,7 @@ const OrderAnalytics: FC<Props> = (props: Props) => {
 
                             <div className='w-full flex items-center justify-center'>
 
-                                <div className='w-full h-[500px] m-auto 800px:w-[900px] 800px:h-[600px]'>
+                                <div className={`w-full h-full m-auto  ${isDashboard ? '800px:h-[400px] 800px:w-[750px]' : '800px:w-[900px] 800px:h-[600px]'}`}>
                                     <Bar data={lineData} options={lineOptions} />
                                 </div>
 

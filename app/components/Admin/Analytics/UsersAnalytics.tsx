@@ -155,7 +155,7 @@ const UsersAnalytics: FC<Props> = ({isDashboard}) => {
 
                             <div className='w-full flex items-center justify-center'>
 
-                                <div className='w-full h-full m-auto 800px:w-[900px] 800px:h-[600px]'>
+                                <div className={`w-full h-full m-auto  ${isDashboard ? '800px:h-[400px] 800px:w-[750px]' : '800px:w-[900px] 800px:h-[600px]'}`}>
                                     <Line data={lineData} options={lineOptions} />
                                 </div>
 
