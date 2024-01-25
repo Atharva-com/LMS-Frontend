@@ -40,7 +40,7 @@ const CircularProgressWithLabel: FC<Props> = ({ open, value }) => {
 
 const DashboardWidgets: FC<Props> = ({ open }) => {
     return (
-        <div className='min-h-screen'>
+        <div className='min-h-screen mb-8'>
 
             <div className='grid grid-cols-[75%,25%]'>
 
@@ -104,9 +104,9 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
 
             </div>
 
-            <div className='grid grid-cols-[65%, 35%] mt-[-20px]'>
+            <div className='grid grid-cols-[65%,35%] mt-[-20px]'>
 
-                <div className='dark:bg-[#111C43] w-[94%] mt-[30px] h-[40vh] shadow-sm m-auto'>
+                <div className='dark:bg-[#111C43] w-[94%] mt-[30px] shadow-sm m-auto'>
                     <OrderAnalytics isDashboard={true} />
                 </div>
 
