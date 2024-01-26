@@ -43,7 +43,7 @@ const ReviewCard:FC<Props> = ({item}) => {
         </div>
       </div>
 
-      <p className='pt-2 px-2 font-Poppins'>
+      <p className='pt-2 px-2 font-Poppins text-[#000] dark:text-[#ffffffab]'>
         {item.review}
       </p>
 
