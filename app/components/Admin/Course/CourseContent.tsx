@@ -238,6 +238,30 @@ const CourseContent: FC<Props> = ({ courseContentData, setCourseContentData, han
                             />
                           </div>
 
+                          {/* video length */}
+                          <div className='my-3'>
+                            <label className={styles.label}>
+                              Video length (in minutes)
+                            </label>
+
+                            <input
+                              type="number"
+                              className={`${styles.input}`}
+                              placeholder='45'
+                              value={item.videoLength}
+                              onChange={(e) => {
+                                let newCourseContentData = [...courseContentData]
+                                newCourseContentData = newCourseContentData.map((item, i) => {
+                                  if (i === index) {
+                                    return { ...item, videoLength: e.target.value };
+                                  }
+                                  return item;
+                                });
+                                setCourseContentData(newCourseContentData)
+                              }}
+                            />
+                          </div>
+
                           {/* video description */}
                           <div className='my-3'>
                             <label className={styles.label}>

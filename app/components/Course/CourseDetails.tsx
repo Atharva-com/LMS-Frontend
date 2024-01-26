@@ -33,7 +33,7 @@ const CourseDetails: FC<Props> = ({ data }) => {
                     {/* first part till reviews */}
                     <div className="w-full 800px:w-[65%] 800px:pr-5">
 
-                        <h1 className='text-[25px] font-Poppins font-[600] text-black dark:text-white'>
+                        <h1 className='text-[28px] font-Poppins font-[600] text-black dark:text-white'>
                             {data.name}
                         </h1>
 
@@ -62,7 +62,7 @@ const CourseDetails: FC<Props> = ({ data }) => {
 
                         <>
 
-                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-300'>
+                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-200 font-medium'>
                                 What you will learn from this course?
                             </h1>
 
@@ -90,7 +90,7 @@ const CourseDetails: FC<Props> = ({ data }) => {
 
                         <>
 
-                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-300'>
+                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-200'>
                                 What are the prerequisites for starting this course?
                             </h1>
 
@@ -115,12 +115,12 @@ const CourseDetails: FC<Props> = ({ data }) => {
 
                                 <>
 
-                                    <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-300'>
+                                    <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-white font-medium'>
                                         Course Overview
                                     </h1>
 
                                     {/* Course Content List */}
-                                    <CourseContentList />
+                                    <CourseContentList data={data?.courseData} isDemo={true} />
 
                                 </>
                             </div>
@@ -132,7 +132,7 @@ const CourseDetails: FC<Props> = ({ data }) => {
 
                         {/* course description */}
                         <div className="w-full">
-                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-300'>
+                            <h1 className='text-[25px] font-Poppins text-slate-900 dark:text-gray-200 font-medium'>
                                 Course Description
                             </h1>
 
