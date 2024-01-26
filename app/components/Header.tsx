@@ -53,18 +53,17 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
     }
   }, [data, user])
 
-
-  if (typeof window !== "undefined") {
+  useEffect(() => {
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 85) {
+      if (window.pageYOffset > 85) {
         setActive(true)
       } else {
         setActive(false)
       }
 
     })
-  }
-
+  }, [] )
+console.log(active)
   const handleClose = (e: any) => {
     if (e.target.id === 'screen') {
       setOpenSidebar(false)
@@ -73,7 +72,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
 
   return (
     <div className='w-full relative'>
-      <div className={`${active ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 left-0 w-full h-[80px] border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 z-[80]" : 'w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow'}`}>
+      <div className={"dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 left-0 w-full h-[80px] border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 z-[80]"} >
 
         <div className='w-[95%] 800px:w-[92%] m-auto py-2 h-full'>
 

@@ -12,23 +12,23 @@ const Page: FC<Props> = (props) => {
   const [activeItem, setActiveItem] = useState(0)
   const [route, setRoute] = useState("Login")
   return (
-    <div>
+    <>
       <Heading
         title="Learning Platform"
         description="It is a platform for students to learn."
         keywords="Programming, MERN, Development, Redux, Flutter."
       />
 
-      <Header 
-      open={open} 
-      setOpen={setOpen} 
-      activeItem={activeItem} 
-      route={route}
-      setRoute={setRoute}
+      <Header
+        open={open}
+        setOpen={setOpen}
+        activeItem={activeItem}
+        route={route}
+        setRoute={setRoute}
       />
 
       <Hero />
-    </div>
+    </>
   )
 }
 

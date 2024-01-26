@@ -1,13 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { FC } from 'react'
 import { BiSearch } from 'react-icons/bi'
 import heroImg from '../../assests/images/hero.png'
 import circleImg1 from '../../assests/images/circleImg1.svg'
+import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi'
 
 type Props = {}
 
-const Hero = (props: Props) => {
+const Hero:FC<Props> = (props) => {
+    const {data, refetch} = useGetHeroDataQuery("Banner", {refetchOnMountOrArgChange: true})
+    console.log(data)
     return (
 
         <>
@@ -19,14 +22,14 @@ const Hero = (props: Props) => {
 
                     {/* heading */}
                     <h1 className="dark:text-white text-[#000000c7] text-[30px] w-full 1100px:text-[70px] font-[600] font-Josefin py-2 1100px:leading-[75px] 1500px:w-[78%]">
-                        Improve your Online Learning Experince Better Instantly
+                        {data?.layout?.banner?.title}
                     </h1>
 
                     <br />
 
                     {/* tagline */}
                     <p className="dark:text-white text-[#000000c7] font-Josefin font-[600] text-[18px] 1500px:w-[55%] 1100px:w-[78%]">
-                        We have 5k+ Online courses & 40k+ Online registered students. Find your desired Courses from them.
+                    {data?.layout?.banner?.subTitle}
                     </p>
 
                     <br />
@@ -70,13 +73,13 @@ const Hero = (props: Props) => {
                 {/* Hero Image */}
                 <div className="1000px:w-[50%] 1100px:w-[50%] 1000px:px-12 1100px:p-0 flex 1100px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10">
                     <Image
-                        src={heroImg}
+                        src={data?.layout?.banner?.image?.url}
                         width="616"
                         height="617"
                         className={"object-contain 1100px:max-w-[90%] w-full 1500px:max-w-[85%] h-[auto] z-[10] 1100px:mix-blend-darken rounded-full bg-[#0d0e29] p-12"}
                         alt="Hero Illustration"
                         loading="eager"
-                        placeholder="blur"
+                        priority
                     />
                 </div>
 
