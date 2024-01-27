@@ -21,6 +21,7 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
     const [clientSecret, setClientSecret] = useState('')
 
     useEffect(() => {
+        
         if (config) {
             const publishableKey: any = config?.publishableKey;
             setStripePromise(loadStripe(publishableKey))
