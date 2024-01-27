@@ -63,7 +63,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
 
     })
   }, [] )
-console.log(active)
   const handleClose = (e: any) => {
     if (e.target.id === 'screen') {
       setOpenSidebar(false)

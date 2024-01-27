@@ -19,7 +19,7 @@ const CheckOutForm:FC<Props> = ({setOpen, data}) => {
     const [ createOrder, {data: orderData, error} ] = useCreateOrderMutation()
     const {} = useLoadUserQuery({skip: loadUser ? false : true})
     const [isLoading, setIsLoading] = useState(false)
-
+console.log(orderData)
     const handleSubmit  = async (e: any) => {
         e.preventDefault()
         if(!stripe || !elements){
@@ -32,14 +32,14 @@ const CheckOutForm:FC<Props> = ({setOpen, data}) => {
             elements,
             redirect: "if_required",
         })
-
+        console.log(paymentIntent, error)
         if(error){
             setMessage(error.message)
             setIsLoading(false)
         } else if (paymentIntent && paymentIntent.status === "succeeded"){
             setMessage("Payment Success")
             setIsLoading(false)
-            createOrder({coureId: data._id, payment_Info: paymentIntent})
+            createOrder({courseId: data._id, payment_Info: paymentIntent})
             setOpen(false)
         }
         
@@ -64,7 +64,7 @@ const CheckOutForm:FC<Props> = ({setOpen, data}) => {
     <form onSubmit={handleSubmit} id='payment-form'>
         <LinkAuthenticationElement id='link-authentication-element' />
         <PaymentElement id='payment-element' />
-        <button disabled={isLoading || !stripe || !elements} id='submit'>
+        <button disabled={isLoading || !stripe || !elements} id='submit' className='mt-4'>
             <span id='button-text' className={`${styles.button} mt-2 !h-[35pxx]`}>
                 {isLoading ? 'Paying...' : "Pay Now"}
             </span>

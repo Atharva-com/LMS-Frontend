@@ -19,7 +19,6 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
     const [createPaymentIntent, { data: paymentIntentData }] = useCreatePaymentIntentMutation()
     const [stripePromise, setStripePromise] = useState<any>(null)
     const [clientSecret, setClientSecret] = useState('')
-console.log(paymentIntentData)
 
     useEffect(() => {
         if (config) {
