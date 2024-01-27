@@ -18,7 +18,7 @@ const CoursePlayer:FC<Props> = ({videoUrl, title}) => {
   }, [])
   
   return (
-    <div style={{paddingTop: '41%', position: 'relative'}}>
+    <div style={{paddingTop: '56.25%', position: 'relative', overflow: "hidden"}}>
 
       {
         videoData.otp && videoData.playbackInfo !== "" && (
@@ -28,7 +28,7 @@ const CoursePlayer:FC<Props> = ({videoUrl, title}) => {
           height="100%"
           allowFullScreen = {true}
           allow="encrypted-media"
-          style={{position: 'absolute', top: 0, left: 0, border: 0}}
+          style={{position: 'absolute', top: 0, left: 0, border: 0, width: "100%", height: "100%"}}
         ></iframe>
         )
       }
