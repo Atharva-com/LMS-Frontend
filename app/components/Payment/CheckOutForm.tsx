@@ -46,6 +46,7 @@ const CheckOutForm: FC<Props> = ({ setOpen, data }) => {
         if (orderData) {
             if (orderData.success === true) {
                 setLoadUser(true)
+                toast.success("Course purchased successfully. Check confirmation mail")
                 redirect(`/course-access/${data._id}`)
             }
         }

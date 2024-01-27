@@ -9,6 +9,7 @@ import { format } from 'timeago.js'
 import CourseContentList from './CourseContentList'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckOutForm from '../Payment/CheckOutForm'
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
 
 type Props = {
     data: any;
@@ -17,7 +18,8 @@ type Props = {
 }
 
 const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
-    const { user } = useSelector((state: any) => state.auth)
+    const { data: userData } = useLoadUserQuery(undefined, {})
+    const user = userData?.user 
     const [open, setOpen] = useState(false)
     const dicountPercentage = ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100
 
