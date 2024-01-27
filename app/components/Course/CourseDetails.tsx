@@ -2,18 +2,23 @@ import { styles } from '@/app/styles/style'
 import CoursePlayer from '@/app/utils/CoursePlayer'
 import Ratings from '@/app/utils/Ratings'
 import Link from 'next/link'
-import React, { FC } from 'react'
-import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5'
+import React, { FC, useState } from 'react'
+import { IoCheckmarkDoneCircleOutline, IoCloseOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import { format } from 'timeago.js'
 import CourseContentList from './CourseContentList'
+import { Elements } from '@stripe/react-stripe-js'
+import CheckOutForm from '../Payment/CheckOutForm'
 
 type Props = {
-    data: any
+    data: any;
+    stripePromise: any;
+    clientSecret: string;
 }
 
-const CourseDetails: FC<Props> = ({ data }) => {
+const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
     const { user } = useSelector((state: any) => state.auth)
+    const [open, setOpen] = useState(false)
     const dicountPercentage = ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100
 
     const dicountPercentagePrice = dicountPercentage.toFixed(0)
@@ -21,8 +26,7 @@ const CourseDetails: FC<Props> = ({ data }) => {
     const isPurchased = user && user?.courses?.find((item: any) => item._id === data?._id)
 
     const handleOrder = (e: any) => {
-        e.preventDefault()
-        console.log("Order")
+        setOpen(true)
     }
     return (
         <div>
@@ -264,6 +268,31 @@ const CourseDetails: FC<Props> = ({ data }) => {
                 </div>
 
             </div>
+
+            {
+                open && (
+                    <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
+                        
+                        <div className="w-[500px] min-h-[500px] bg-white rounded-xl p-3 shadow">
+
+                            <div className="flex w-full justify-end">
+
+                                <IoCloseOutline size={40} className='text-black cursor-pointer' onClick={() => setOpen(false)} />
+                            </div>
+
+                            <div className="w-full">
+                                {
+                                    stripePromise && clientSecret && (
+                                        <Elements stripe={stripePromise} options={{clientSecret}}>
+                                            <CheckOutForm data={data} setOpen={setOpen} />
+                                        </Elements>
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     )
 }
