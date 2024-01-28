@@ -143,7 +143,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                 cols={40}
                                 rows={5}
                                 placeholder='Write your question ...'
-                                className='outline-none bg-transparent ml-3 border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins'
+                                className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins'
                             ></textarea>
 
                         </div>
@@ -198,7 +198,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                                     key={i}
                                                                     className='mr-1 cursor-pointer'
                                                                     color='rgb(246, 186, 0)'
-                                                                    size={25}
+                                                                    size={15}
                                                                     onClick={() => setRating(i)}
                                                                 />
                                                             )
@@ -207,7 +207,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                                         key={i}
                                                                         className='mr-1 cursor-pointer'
                                                                         color='rgb(246, 186, 0)'
-                                                                        size={25}
+                                                                        size={15}
                                                                         onClick={() => setRating(i)}
                                                                     />
 
@@ -224,7 +224,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                     cols={40}
                                                     rows={5}
                                                     placeholder='Write your comment ...'
-                                                    className='outline-none bg-transparent ml-3 border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins'
+                                                    className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins'
                                                 ></textarea>
                                             </div>
                                         </div>
