@@ -13,10 +13,10 @@ const Page = ({params}: Props) => {
     const id = params.id
 
     const {isLoading, error, data} = useLoadUserQuery(undefined, {})
-
+console.log(data)
     useEffect(() => {
         if(data) {
-            const isPurhased = data.user.courses.find((item: any) => item._id === id)
+            const isPurhased = data?.user?.courses.find((item: any) => item._id === id)
             if(!isPurhased) {
                 window.location.href = '/'
                 toast.error("You don't have access to this course.")

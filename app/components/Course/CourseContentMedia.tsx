@@ -6,6 +6,8 @@ import avatar from '../../assests/images/avatar1.jpg'
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineStar } from 'react-icons/ai';
 import toast from 'react-hot-toast';
 import { useAddNewQuestionMutation } from '@/redux/features/courses/coursesApi';
+import { format } from 'timeago.js';
+import { BiMessage } from 'react-icons/bi';
 
 type Props = {
     user: any;
@@ -318,7 +320,7 @@ const CommentReply = ({
                             setAnswer={setAnswer}
                             setAnswerId={setAnswerId}
                             handleReviewSubmit={handleReviewSubmit}
-                         />
+                        />
                     )
                 })
             }
@@ -337,7 +339,101 @@ const CommentItem = ({
     setAnswerId,
     handleReviewSubmit,
 }: any) => {
+    const [replyActive, setReplyActive] = useState(false)
     return (
-        <div></div>
+        <div className='my-4'>
+            <div className="flex mb-2">
+                <div>
+                    <Image
+                        src={item?.user?.avatar?.url || item?.user?.image || avatar}
+                        alt=''
+                        width={60}
+                        height={60}
+                        className='rounded-full w-[50px] h-[50px]'
+                    />
+                </div>
+
+                <div className="pl-3 dark:text-white text-black">
+                    <h5 className='text-[20px]'>
+                        {item?.user?.name}
+                    </h5>
+
+                    <p>{item?.question}</p>
+
+                    <small className='text-black dark:text-[#ffffff83]'>
+                        {!item?.createdAt ? "" : format(item?.createdAt)} *
+                    </small>
+                </div>
+            </div>
+
+            <div className="w-full flex">
+                <span
+                    className='800px:pl-16 text-black dark:text-[#ffffff83] cursor-pointer mr-2'
+                    onClick={() => setReplyActive(!replyActive)}
+                >
+                    {!replyActive ? item.questionReplies.length !== 0 ? "All Replies" : "Add Reply" : "Hide Replies"}
+                </span>
+
+                <BiMessage size={20} className="cursor-pointer dark:text-[##ffffff83] text-black" />
+                <span className='pl-1 mt-[-4px] cursor-pointer dark:text-[##ffffff83] text-black text-[#ffffff83]'>
+                    {item.questionReplies.length}
+                </span>
+            </div>
+
+            {
+                replyActive && (
+                    <>
+                        {item.questionReplies.map((item: any, index: number) => {
+                            return (
+                                <div className="w-full flex 800px:ml-16 my-5 text-black dark:text-white" key={index}>
+                                    <div>
+                                        <Image
+                                            src={item?.user?.avatar?.url || item?.user?.image || avatar}
+                                            alt=''
+                                            width={60}
+                                            height={60}
+                                            className='rounded-full w-[50px] h-[50px]'
+                                        />
+                                    </div>
+
+                                    <div className="pl-2">
+                                        <h5 className='text-[20px]'>
+                                            {item?.user?.name}
+                                        </h5>
+
+                                        <p>{item?.comment}</p>
+
+                                        <small className='text-black dark:text-[#ffffff83]'>
+                                            {!item?.createdAt ? "" : format(item?.createdAt)} *
+                                        </small>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        <>
+                        <div className="w-full flex relative dark:text-white text-black">
+
+                            <input 
+                            type="text"
+                            placeholder="Write your reply ..."
+                            value={answer}
+                            onChange={(e: any) => setAnswer(e.target.value)}
+                            className='block 800px:ml-12 mt-2 outline-none bg-transparent border-0 dark:text-white text-black border-[#00000027] dark:border-[#fff] p-[5px] w-[95%]'
+                            />
+
+                            <button
+                            type='submit'
+                            className='absolute right-0 bottom-1'
+                            onClick={handleReviewSubmit}
+                            disabled={answer === 0}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                        </>
+                    </>
+                )
+            }
+        </div>
     )
 }
