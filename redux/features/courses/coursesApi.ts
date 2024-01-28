@@ -60,7 +60,16 @@ export const coursesApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    addNewQuestion: builder.mutation({
+      query: ({question, courseId, contentId}) => ({
+        url: `add-question`,
+        method: "PUT",
+        body: {question, courseId, contentId},
+        credentials: "include" as const,
+      }),
+    }),
+
   }),
 });
 
-export const { useCreateCourseMutation, useGetAllCoursesQuery, useDeleteCourseMutation, useEditCourseMutation, useGetAllUserCoursesQuery, useGetCourseDetailsQuery, useGetCourseContentQuery } = coursesApi;
+export const { useCreateCourseMutation, useGetAllCoursesQuery, useDeleteCourseMutation, useEditCourseMutation, useGetAllUserCoursesQuery, useGetCourseDetailsQuery, useGetCourseContentQuery, useAddNewQuestionMutation } = coursesApi;

@@ -1,9 +1,11 @@
 import { styles } from '@/app/styles/style';
 import CoursePlayer from '@/app/utils/CoursePlayer';
 import Image from 'next/image';
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import avatar from '../../assests/images/avatar1.jpg'
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineStar } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+import { useAddNewQuestionMutation } from '@/redux/features/courses/coursesApi';
 
 type Props = {
     user: any;
@@ -11,20 +13,47 @@ type Props = {
     id: string;
     activeVideo: number;
     setActiveVideo: (activeVideo: number) => void;
+    refetch: any
 }
 
-const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveVideo }) => {
+const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveVideo, refetch }) => {
     const [activeBar, setActiveBar] = useState(0)
     const [question, setQuestion] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [answerId, setAnswerId] = useState('')
+    const [answer, setAnswer] = useState('')
     const [rating, setRating] = useState(0)
     const [review, setReview] = useState("")
+    const [addNewQuestion, { data: questionData, isLoading: questionLoading, error }] = useAddNewQuestionMutation()
 
     const isReviewExist = data?.reviews?.find((item: any) => item.user._id === user._id)
 
     const handleQuestionSubmit = async () => {
-
+        if (question.length === 0) {
+            toast.error("Question Can't be empty.")
+        } else {
+            addNewQuestion({ question, courseId: id, contentId: data[activeVideo]?._id })
+        }
     }
+    console.log(questionData)
+    useEffect(() => {
+        if (questionData) {
+            if (questionData?.success === true) {
+                toast.success("Question Added Successfully.")
+                setQuestion("")
+                refetch()
+            } else if (questionData?.success === false) {
+                toast.error("Something went wrong.")
+            }
+        }
+
+        if (error) {
+            if ("data" in error) {
+                const errorMessage = error as any
+                toast.error(errorMessage.data.message)
+            }
+        }
+    }, [error, questionData])
 
     const handleReviewSubmit = async () => {
 
@@ -151,9 +180,9 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                         <div className='w-full flex justify-end'>
 
                             <div
-                                className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${isLoading && "cursor-no-drop"
+                                className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${questionLoading && "cursor-no-drop"
                                     }`}
-                                onClick={handleQuestionSubmit}
+                                onClick={questionLoading ? () => { } : handleQuestionSubmit}
                             >
                                 Submit
                             </div>
@@ -165,6 +194,17 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                         <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
 
                         {/* question replies */}
+                        <div>
+                            <CommentReply
+                                data={data}
+                                user={user}
+                                activeVideo={activeVideo}
+                                answer={answer}
+                                setAnswer={setAnswer}
+                                setAnswerId={setAnswerId}
+                                handleReviewSubmit={handleReviewSubmit}
+                            />
+                        </div>
                     </>
                 )
             }
@@ -253,3 +293,51 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
 }
 
 export default CourseContentMedia
+
+const CommentReply = ({
+    data,
+    user,
+    activeVideo,
+    answer,
+    setAnswer,
+    setAnswerId,
+    handleReviewSubmit,
+}: any) => {
+    return (
+        <div className='w-full my-3'>
+
+            {
+                data[activeVideo].questions.map((item: any, index: number) => {
+                    return (
+                        <CommentItem
+                            key={index}
+                            item={item}
+                            user={user}
+                            activeVideo={activeVideo}
+                            answer={answer}
+                            setAnswer={setAnswer}
+                            setAnswerId={setAnswerId}
+                            handleReviewSubmit={handleReviewSubmit}
+                         />
+                    )
+                })
+            }
+
+        </div>
+    )
+}
+
+const CommentItem = ({
+    key,
+    item,
+    user,
+    activeVideo,
+    answer,
+    setAnswer,
+    setAnswerId,
+    handleReviewSubmit,
+}: any) => {
+    return (
+        <div></div>
+    )
+}
