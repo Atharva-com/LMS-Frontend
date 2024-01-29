@@ -17,7 +17,7 @@ const CourseCard:FC<Props> = ({item, isProfile}) => {
             <Image src={item.thumbnail.url} width={500} height={300} objectFit='contain' className='rounded w-full h-[16rem]' alt="" />
             <br />
 
-            <h1 className='font-Josefin text-[16px] text-black dark:text-[#fff]'>
+            <h1 className='font-Josefin text-[16px] h-[3rem] text-black dark:text-[#fff]'>
                 {item.name}
             </h1>
 
