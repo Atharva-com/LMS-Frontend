@@ -2,12 +2,14 @@ import { styles } from '@/app/styles/style';
 import CoursePlayer from '@/app/utils/CoursePlayer';
 import Image from 'next/image';
 import React, { FC, useEffect, useState } from 'react'
-import avatar from '../../assests/images/avatar1.jpg'
+import avatar from '../../assests/images/avatar.png'
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineStar } from 'react-icons/ai';
 import toast from 'react-hot-toast';
-import { useAddNewQuestionMutation, useAddReplyToQuestionMutation } from '@/redux/features/courses/coursesApi';
+import { useAddNewQuestionMutation, useAddReplyToQuestionMutation, useAddReviewInQuestionMutation, useAddReviewReplyMutation, useGetCourseDetailsQuery } from '@/redux/features/courses/coursesApi';
 import { format } from 'timeago.js';
 import { BiMessage } from 'react-icons/bi';
+import { VscVerifiedFilled } from 'react-icons/vsc';
+import Ratings from '@/app/utils/Ratings';
 
 type Props = {
     user: any;
@@ -19,17 +21,24 @@ type Props = {
 }
 
 const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveVideo, refetch }) => {
+
     const [activeBar, setActiveBar] = useState(0)
     const [question, setQuestion] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
     const [questionId, setQuestionId] = useState('')
+    const [reviewId, setReviewId] = useState('')
     const [answer, setAnswer] = useState('')
     const [rating, setRating] = useState(0)
     const [review, setReview] = useState("")
+    const [reviewReply, setReviewReply] = useState('')
+    const [isReviewReply, setIsReviewReply] = useState(false)
     const [addNewQuestion, { data: questionData, isLoading: questionLoading, error }] = useAddNewQuestionMutation()
     const [addReplyToQuestion, { data: answerData, isLoading: answerLoading, }] = useAddReplyToQuestionMutation()
-    const isReviewExist = data?.reviews?.find((item: any) => item.user._id === user._id)
-console.log(answerData)
+    const [addReviewInQuestion, { data: reviewData, isLoading: reviewLoading, }] = useAddReviewInQuestionMutation()
+    const [addReviewReply, { data: reviewReplyData, isLoading: reviewReplyLoading }] = useAddReviewReplyMutation()
+    const { data: courseData, refetch: courseRefetch } = useGetCourseDetailsQuery(id, { refetchOnMountOrArgChange: true })
+    const course = courseData?.course
+    const isReviewExist = course?.reviews?.find((item: any) => item.user._id === user._id)
+    console.log(reviewReplyData)
     const handleQuestionSubmit = async () => {
         if (question.length === 0) {
             toast.error("Question Can't be empty.")
@@ -47,6 +56,19 @@ console.log(answerData)
     }
 
     const handleReviewSubmit = async () => {
+        if (review.length === 0) {
+            toast.error("Review Can't be empty.")
+        } else {
+            addReviewInQuestion({ review, rating, courseId: id })
+        }
+    }
+    console.log(reviewId)
+    const handleReviewReplySubmit = async () => {
+        if (reviewReply.length === 0) {
+            toast.error("Reply Can't be empty.")
+        } else {
+            addReviewReply({ reviewReply, courseId: id, reviewId: reviewId })
+        }
 
     }
 
@@ -71,13 +93,34 @@ console.log(answerData)
             }
         }
 
+        if (reviewData) {
+            if (reviewData?.success === true) {
+                toast.success("Review Added Successfully.")
+                setReview("")
+                setRating(0)
+                courseRefetch()
+            } else if (reviewData?.success === false) {
+                toast.error("Something went wrong.")
+            }
+        }
+
+        if (reviewReplyData) {
+            if (reviewReplyData?.success === true) {
+                toast.success("Reply Added Successfully.")
+                setReviewReply("")
+                courseRefetch()
+            } else if (reviewReplyData?.success === false) {
+                toast.error("Something went wrong.")
+            }
+        }
+
         if (error) {
             if ("data" in error) {
                 const errorMessage = error as any
                 toast.error(errorMessage.data.message)
             }
         }
-    }, [error, questionData, answerData])
+    }, [error, questionData, answerData, reviewData, reviewReplyData])
 
     return (
         <div className='w-[95%] 800px:w-[86%] py-4 m-auto'>
@@ -107,8 +150,8 @@ console.log(answerData)
                         setActiveVideo(data && data.length - 1 === activeVideo ? activeVideo : activeVideo + 1)
                     }}
                 >
-                    <AiOutlineArrowLeft className='mr-2' />
                     Next Lesson
+                    <AiOutlineArrowLeft className='ml-2 rotate-180' />
                 </div>
             </div>
 
@@ -176,7 +219,7 @@ console.log(answerData)
                         <div className='w-full flex'>
 
                             <Image
-                                src={user?.avatar?.url || data?.user?.image || avatar}
+                                src={user?.avatar ? user?.avatar?.url : avatar}
                                 alt=''
                                 width={60}
                                 height={60}
@@ -288,14 +331,15 @@ console.log(answerData)
                                                     className='outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins'
                                                 ></textarea>
                                             </div>
+
                                         </div>
 
                                         <div className='w-full flex justify-end'>
 
                                             <div
-                                                className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${isLoading && "cursor-no-drop"
+                                                className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${reviewLoading && "cursor-no-drop"
                                                     }`}
-                                                onClick={handleReviewSubmit}
+                                                onClick={reviewLoading ? () => { } : handleReviewSubmit}
                                             >
                                                 Submit
                                             </div>
@@ -304,6 +348,88 @@ console.log(answerData)
                                     </>
                                 )
                             }
+                            <br />
+
+                            <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
+
+                            <div className="w-full">
+                                {
+                                    (course?.reviews && [...course?.reviews].reverse()).map((item: any, index: number) => {
+                                        console.log(item._id);
+                                        return (
+                                            <div className="w-full mt-5" key={index}>
+                                                <div className="w-full flex">
+                                                    <div>
+                                                        <Image
+                                                            src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
+                                                            alt=''
+                                                            width={50}
+                                                            height={50}
+                                                            className='rounded-full w-[50px] h-[50px]'
+                                                        />
+                                                    </div>
+
+                                                    <div className="ml-2">
+                                                        <h1 className='text-[18px] text-black dark:text-[#ffffff83]'>
+                                                            {item?.user?.name}
+                                                        </h1>
+
+                                                        <Ratings rating={item?.rating} />
+
+                                                        <p className='text-black dark:text-[#ffffff83]'>
+                                                            {item?.comment}
+                                                        </p>
+
+                                                        <small className='text-black dark:text-[#ffffff83]'>
+                                                            {format(item?.createdAt)}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                {
+                                                    user?.role === 'admin' && (
+                                                        <span
+                                                            className={`${styles.label} !pl-10 cursor-pointer text-black dark:text-[#ffffff83]`}
+                                                            onClick={() => {
+                                                                setIsReviewReply(!isReviewReply)
+                                                                setReviewId(item?._id)
+                                                            }}
+                                                        >
+                                                           {isReviewReply ? 'Hide Reply' : 'Add Reply'}
+                                                        </span>
+                                                    )
+                                                }
+
+                                                {
+                                                    isReviewReply && (
+                                                        <div className="w-full flex relative dark:text-white text-black">
+
+                                                            <input
+                                                                type="text"
+                                                                placeholder="Write your reply ..."
+                                                                value={reviewReply}
+                                                                onChange={(e: any) => setReviewReply(e.target.value)}
+                                                                className={`block 800px:ml-12 mt-2 outline-none bg-transparent border-0 dark:text-white text-black border-[#00000027] dark:border-[#fff] p-[5px] w-[95%] ${reviewReply === "" || reviewReplyLoading && "cursor-not-allowed"}`}
+                                                            />
+
+                                                            <button
+                                                                type='submit'
+                                                                className='absolute right-0 bottom-1 text-black dark:text-[#ffffff83]'
+                                                                onClick={handleReviewReplySubmit}
+                                                                disabled={reviewReply === "" || reviewReplyLoading}
+                                                            >
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+
+
+
                         </>
                     </div>
                 )
@@ -323,7 +449,7 @@ const CommentReply = ({
     setAnswer,
     setQuestionId,
     handleAnswerSubmit,
-    answerLoading
+    answerLoading,
 }: any) => {
     return (
         <div className='w-full my-3'>
@@ -334,6 +460,7 @@ const CommentReply = ({
                         <CommentItem
                             key={index}
                             item={item}
+                            user={user}
                             answer={answer}
                             setAnswer={setAnswer}
                             setQuestionId={setQuestionId}
@@ -351,21 +478,23 @@ const CommentReply = ({
 const CommentItem = ({
     item,
     answer,
+    user,
     setAnswer,
     setQuestionId,
     handleAnswerSubmit,
-    answerLoading
+    answerLoading,
 }: any) => {
     const [replyActive, setReplyActive] = useState(false)
+    console.log(user)
     return (
         <div className='my-4'>
             <div className="flex mb-2">
                 <div>
                     <Image
-                        src={item?.user?.avatar?.url || item?.user?.image || avatar}
+                        src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
                         alt=''
-                        width={60}
-                        height={60}
+                        width={50}
+                        height={50}
                         className='rounded-full w-[50px] h-[50px]'
                     />
                 </div>
@@ -391,7 +520,7 @@ const CommentItem = ({
                         setQuestionId(item?._id)
                     }}
                 >
-                    {!replyActive ? item.questionReplies.length !== 0 ? "All Replies" : "Add Reply" : "Hide Replies"}
+                    {!replyActive ? item.questionReplies.length !== 0 ? "All Replies" : user?.role === 'admin' ? "Add Reply" : "" : "Hide Replies"}
                 </span>
 
                 <BiMessage size={20} className="cursor-pointer dark:text-[#ffffff83] text-black" />
@@ -408,7 +537,7 @@ const CommentItem = ({
                                 <div className="w-full flex 800px:ml-16 my-5 text-black dark:text-white" key={index}>
                                     <div>
                                         <Image
-                                            src={item?.user?.avatar?.url || item?.user?.image || avatar}
+                                            src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
                                             alt=''
                                             width={60}
                                             height={60}
@@ -417,11 +546,15 @@ const CommentItem = ({
                                     </div>
 
                                     <div className="pl-2">
-                                        <h5 className='text-[20px]'>
-                                            {item?.user?.name}
-                                        </h5>
+                                        <div className="flex items-center text-black dark:text-[#ffffff83]">
+                                            <h5 className='text-[20px]'>
+                                                {item?.user?.name}
+                                            </h5>
 
-                                        <p>{item?.answer}</p>
+                                            {item?.user?.role === 'admin' && <VscVerifiedFilled size={20} className='ml-2 text-green-500' />}
+                                        </div>
+
+                                        <p className='text-black dark:text-[#ffffff83]'>{item?.answer}</p>
 
                                         <small className='text-black dark:text-[#ffffff83]'>
                                             {!item?.createdAt ? "" : format(item?.createdAt)} *
@@ -430,7 +563,7 @@ const CommentItem = ({
                                 </div>
                             )
                         })}
-                        <>
+                        {user?._id !== item?.user?._id && <>
                             <div className="w-full flex relative dark:text-white text-black">
 
                                 <input
@@ -443,14 +576,14 @@ const CommentItem = ({
 
                                 <button
                                     type='submit'
-                                    className='absolute right-0 bottom-1'
+                                    className='absolute right-0 bottom-1 text-black dark:text-[#ffffff83]'
                                     onClick={handleAnswerSubmit}
                                     disabled={answer === 0 || answerLoading}
                                 >
                                     Submit
                                 </button>
                             </div>
-                        </>
+                        </>}
                     </>
                 )
             }

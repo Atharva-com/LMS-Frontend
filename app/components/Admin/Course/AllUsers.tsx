@@ -119,7 +119,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
 
         if (updateData?.success === true) {
             refetch()
-            toast.success(updateData.message)
+            toast.success("Role Updated Successfully.")
             setActive(false)
         } else if (updateData?.success === false) {
             toast.error(updateData.message)
@@ -226,7 +226,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                                                 className={`${styles.input}`}
                                             />
 
-                                            <select name="" id="" value={role} className={`${styles.input} !mt-6`} onChange={() => setRole(role)} >
+                                            <select name="" id="" value={role} className={`${styles.input} !mt-6`} onChange={(e) => setRole(e.target.value)} >
                                                 <option value="admin" className='dark:text-black dark:bg-white bg-slate-800 text-white'>Admin</option>
                                                 <option value="user" className='dark:text-black dark:bg-white bg-slate-800 text-white'>User</option>
                                             </select>

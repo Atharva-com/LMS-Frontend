@@ -13,7 +13,6 @@ const Page = ({params}: Props) => {
     const id = params.id
 
     const {isLoading, error, data} = useLoadUserQuery(undefined, {})
-console.log(data)
     useEffect(() => {
         if(data) {
             const isPurhased = data?.user?.courses.find((item: any) => item._id === id)
@@ -27,6 +26,8 @@ console.log(data)
             }
         }
     },[data, error, id])
+
+    console.log(data)
 
   return (
     <>
