@@ -87,7 +87,7 @@ const CourseContentList:FC<Props> = ({data, isDemo, activeVideo, setActiveVideo}
                             <div
                             key={index}
                             className={`w-full ${
-                              videoIndex === activeVideo ? "bg-slate-800" : ""
+                              videoIndex === activeVideo ? "bg-slate-600" : ""
                             } cursor-pointer transition-all p-2`}
                             onClick={() => isDemo ? null : setActiveVideo(videoIndex)}
                             >
@@ -96,12 +96,12 @@ const CourseContentList:FC<Props> = ({data, isDemo, activeVideo, setActiveVideo}
                                   <MdOutlineOndemandVideo size={25} color='#1cdada' />
                                 </div>
 
-                                <h1 className='text-[19px] ml-3 inline-block break-words text-black font-normal dark:text-gray-200'>
+                                <h1 className={`text-[19px] ml-3 inline-block break-words ${ videoIndex === activeVideo ? 'text-gray-200' : 'text-black'} font-normal dark:text-gray-200`}>
                                   {item.title}
                                 </h1>
                               </div>
 
-                              <h5 className='pl-8 text-black dark:text-gray-500'>
+                              <h5 className={`pl-8  ${ videoIndex === activeVideo ? 'text-gray-400' : 'text-black'} dark:text-gray-500`}>
                                 {item.videoLength > 60 ? contentLength.toFixed(2) :  item.videoLength} {" "}
                                 {item.videoLength > 60 ? 'hours' : 'mins'}
                               </h5>

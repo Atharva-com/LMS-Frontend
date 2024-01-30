@@ -10,6 +10,8 @@ import CourseContentList from './CourseContentList'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckOutForm from '../Payment/CheckOutForm'
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
+import Image from 'next/image'
+import avatar from '../../assests/images/avatar1.jpg'
 
 type Props = {
     data: any;
@@ -19,7 +21,7 @@ type Props = {
 
 const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
     const { data: userData } = useLoadUserQuery(undefined, {})
-    const user = userData?.user 
+    const user = userData?.user
     const [open, setOpen] = useState(false)
     const dicountPercentage = ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100
 
@@ -179,11 +181,13 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
 
                                                 <div className='h-[50px] w-[50px]'>
 
-                                                    <div className='h-[50px] w-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer'>
-                                                        <h1 className='uppercase text-[18px] text-black dark:text-white'>
-                                                            {item?.user?.name?.slice(0, 2)}
-                                                        </h1>
-                                                    </div>
+                                                    <Image
+                                                        src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
+                                                        alt=''
+                                                        width={60}
+                                                        height={60}
+                                                        className='rounded-full w-[50px] h-[50px]'
+                                                    />
 
                                                 </div>
 
@@ -227,17 +231,17 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
                             {/* Course price details */}
                             <div className="flex items-center">
 
-                                    <h1 className='pt-5 text-[25px] text-black dark:text-white'>
-                                        ₹{data?.price}
-                                    </h1>
+                                <h1 className='pt-5 text-[25px] text-black dark:text-white'>
+                                    ₹{data?.price}
+                                </h1>
 
-                                    <h5 className='pl-3 text-[20px] mt-2 line-through opacity-80 text-red-500'>
-                                        ₹{data?.estimatedPrice}
-                                    </h5>
+                                <h5 className='pl-3 text-[20px] mt-2 line-through opacity-80 text-red-500'>
+                                    ₹{data?.estimatedPrice}
+                                </h5>
 
-                                    <h4 className='text-green-500 pl-5 pt-4 text-[22px]'>
-                                        {dicountPercentagePrice}% off
-                                    </h4>
+                                <h4 className='text-green-500 pl-5 pt-4 text-[22px]'>
+                                    {dicountPercentagePrice}% off
+                                </h4>
 
                             </div>
 
@@ -245,18 +249,18 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
 
                             <div className="flex items-center">
                                 {isPurchased ? (
-                                    <Link 
-                                    className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
-                                    href={`/course-access/${data?._id}`}
+                                    <Link
+                                        className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
+                                        href={`/course-access/${data?._id}`}
                                     >
-                                    Enter to Course
+                                        Enter to Course
                                     </Link>
                                 ) : (
                                     <div className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`} onClick={handleOrder}>
                                         Buy Now ₹{data?.price}
                                     </div>
                                 )
-                            }
+                                }
                             </div>
 
                             <br />
@@ -274,7 +278,7 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
             {
                 open && (
                     <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
-                        
+
                         <div className="w-[500px] min-h-[500px] bg-white rounded-xl p-3 shadow">
 
                             <div className="flex w-full justify-end">
@@ -285,7 +289,7 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
                             <div className="w-full">
                                 {
                                     stripePromise && clientSecret && (
-                                        <Elements stripe={stripePromise} options={{clientSecret}}>
+                                        <Elements stripe={stripePromise} options={{ clientSecret }}>
                                             <CheckOutForm data={data} setOpen={setOpen} />
                                         </Elements>
                                     )

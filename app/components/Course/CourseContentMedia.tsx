@@ -62,12 +62,12 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
             addReviewInQuestion({ review, rating, courseId: id })
         }
     }
-    console.log(reviewId)
+
     const handleReviewReplySubmit = async () => {
         if (reviewReply.length === 0) {
             toast.error("Reply Can't be empty.")
         } else {
-            addReviewReply({ reviewReply, courseId: id, reviewId: reviewId })
+            addReviewReply({ comment:reviewReply, courseId: id, reviewId: reviewId })
         }
 
     }
@@ -355,9 +355,10 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                             <div className="w-full">
                                 {
                                     (course?.reviews && [...course?.reviews].reverse()).map((item: any, index: number) => {
-                                        console.log(item._id);
                                         return (
                                             <div className="w-full mt-5" key={index}>
+
+
                                                 <div className="w-full flex">
                                                     <div>
                                                         <Image
@@ -385,6 +386,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                         </small>
                                                     </div>
                                                 </div>
+
                                                 {
                                                     user?.role === 'admin' && (
                                                         <span
@@ -421,6 +423,40 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                             </button>
                                                         </div>
                                                     )
+                                                }
+
+                                                {
+                                                    item?.commentReplies.map((item: any, index: number) => {
+                                                        return (
+                                                            <div className="w-full flex 800px:ml-16 my-5 text-black dark:text-white" key={index}>
+                                                                <div>
+                                                                    <Image
+                                                                        src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
+                                                                        alt=''
+                                                                        width={60}
+                                                                        height={60}
+                                                                        className='rounded-full w-[50px] h-[50px]'
+                                                                    />
+                                                                </div>
+
+                                                                <div className="pl-2">
+                                                                    <div className="flex items-center text-black dark:text-[#ffffff83]">
+                                                                        <h5 className='text-[20px]'>
+                                                                            {item?.user?.name}
+                                                                        </h5>
+
+                                                                        {item?.user?.role === 'admin' && <VscVerifiedFilled size={20} className='ml-2 text-green-500' />}
+                                                                    </div>
+
+                                                                    <p className='text-black dark:text-[#ffffff83]'>{item?.comment}</p>
+
+                                                                    <small className='text-black dark:text-[#ffffff83]'>
+                                                                        {!item?.createdAt ? "" : format(item?.createdAt)} *
+                                                                    </small>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
                                                 }
                                             </div>
                                         )
