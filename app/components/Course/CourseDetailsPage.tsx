@@ -21,7 +21,7 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
     const [clientSecret, setClientSecret] = useState('')
 
     useEffect(() => {
-        
+
         if (config) {
             const publishableKey: any = config?.publishableKey;
             setStripePromise(loadStripe(publishableKey))
@@ -29,7 +29,7 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
 
         if (data?.success === true) {
             const amount = Math.round(data.course.price * 100)
-            
+
             createPaymentIntent(amount)
         }
     }, [data])
@@ -69,6 +69,8 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
                                         data={data.course}
                                         stripePromise={stripePromise}
                                         clientSecret={clientSecret}
+                                        setRoute={setRoute}
+                                        setOpen={setOpen}
                                     />
                                 )
                             }

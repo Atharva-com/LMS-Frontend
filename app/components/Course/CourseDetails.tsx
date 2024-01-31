@@ -17,9 +17,11 @@ type Props = {
     data: any;
     stripePromise: any;
     clientSecret: string;
+    setRoute: (route: string) => void;
+    setOpen: (open: boolean) => void;
 }
 
-const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
+const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret, setRoute, setOpen: OpenLoginModal }) => {
     const { data: userData } = useLoadUserQuery(undefined, {})
     const user = userData?.user
     const [open, setOpen] = useState(false)
@@ -30,7 +32,12 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret }) => {
     const isPurchased = user && user?.courses?.find((item: any) => item._id === data?._id)
 
     const handleOrder = (e: any) => {
+        if(user){
         setOpen(true)
+        } else {
+            setRoute("Login")
+            OpenLoginModal(true)
+        }
     }
     return (
         <div>
