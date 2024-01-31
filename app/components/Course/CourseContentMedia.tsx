@@ -464,8 +464,6 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                 }
                             </div>
 
-
-
                         </>
                     </div>
                 )
