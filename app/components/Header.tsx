@@ -15,7 +15,6 @@ import Image from 'next/image';
 import { useLogoutQuery, useSocialAuthMutation } from '../../redux/features/auth/authApi';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
-import { truncate } from 'fs';
 
 type Props = {
   open: boolean;
