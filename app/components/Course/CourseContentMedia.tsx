@@ -41,7 +41,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
     const { data: courseData, refetch: courseRefetch } = useGetCourseDetailsQuery(id, { refetchOnMountOrArgChange: true })
     const course = courseData?.course
     const isReviewExist = course?.reviews?.find((item: any) => item.user._id === user._id)
-    console.log(reviewReplyData)
+
     const handleQuestionSubmit = async () => {
         if (question.length === 0) {
             toast.error("Question Can't be empty.")
