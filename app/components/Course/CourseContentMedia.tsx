@@ -287,6 +287,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                 answer={answer}
                                 setAnswer={setAnswer}
                                 setQuestionId={setQuestionId}
+                                questionId={questionId}
                                 handleAnswerSubmit={handleAnswerSubmit}
                                 answerLoading={answerLoading}
                             />
@@ -506,6 +507,7 @@ const CommentReply = ({
     setQuestionId,
     handleAnswerSubmit,
     answerLoading,
+    questionId
 }: any) => {
     return (
         <div className='w-full my-3'>
@@ -522,6 +524,7 @@ const CommentReply = ({
                             setQuestionId={setQuestionId}
                             handleAnswerSubmit={handleAnswerSubmit}
                             answerLoading={answerLoading}
+                            questionId={questionId}
                         />
                     )
                 })
@@ -536,6 +539,7 @@ const CommentItem = ({
     answer,
     user,
     setAnswer,
+    questionId,
     setQuestionId,
     handleAnswerSubmit,
     answerLoading,
@@ -586,7 +590,7 @@ const CommentItem = ({
             </div>
 
             {
-                replyActive && (
+                replyActive && questionId === item._id && (
                     <>
                         {item.questionReplies.map((item: any, index: number) => {
                             return (
