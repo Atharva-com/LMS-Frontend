@@ -18,7 +18,7 @@ const Page = (props: Props) => {
   return (
     <div>
         <Heading 
-        title='About us - Learning'
+        title='Policy - Learning'
         description='Learning is a platform for studying online sustainably .'
         keywords='learning, online, study, education, sustainable'
          />

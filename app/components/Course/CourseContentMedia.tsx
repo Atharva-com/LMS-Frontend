@@ -424,7 +424,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                                 }
 
                                                 {
-                                                    isReviewReply && (
+                                                    isReviewReply && reviewId === item._id && (
                                                         <div className="w-full flex relative dark:text-white text-black">
 
                                                             <input
