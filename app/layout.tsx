@@ -10,6 +10,7 @@ import { SessionProvider } from 'next-auth/react'
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
 import { SyncLoader } from 'react-spinners'
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import socketIO from 'socket.io-client'
 import { useEffect } from 'react'
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
@@ -40,6 +41,7 @@ export default function RootLayout({
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <Custom>
             {children}
+            <SpeedInsights />
             <Analytics />
             </Custom>
             <Toaster position='top-center' reverseOrder={false} />
