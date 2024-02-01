@@ -9,6 +9,7 @@ import { Providers } from './Provider'
 import { SessionProvider } from 'next-auth/react' 
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
 import { SyncLoader } from 'react-spinners'
+import { Analytics } from '@vercel/analytics/react';
 import socketIO from 'socket.io-client'
 import { useEffect } from 'react'
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
@@ -39,6 +40,7 @@ export default function RootLayout({
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <Custom>
             {children}
+            <Analytics />
             </Custom>
             <Toaster position='top-center' reverseOrder={false} />
           </ThemeProvider>
