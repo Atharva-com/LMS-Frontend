@@ -8,6 +8,7 @@ import { useLoadUserQuery } from '../../../redux/features/api/apiSlice';
 import toast from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     avatar: string | null;
@@ -16,6 +17,7 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user?.name)
+    const router = useRouter()
     const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation()
     const [loadUser, setLoadUser] = useState(false)
     const {data} = useSession()
@@ -30,6 +32,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
         fileReader.onload = () => {
             if (fileReader.readyState === 2) {
                 updateAvatar({ avatar: fileReader.result })
+                router.refresh()
             }
         }
 
