@@ -12,7 +12,7 @@ type Props = {}
 const Page = (props: Props) => {
 
     const [open, setOpen] = useState(false)
-    const [activeItem, setactiveItem] = useState(2)
+    const [activeItem, setactiveItem] = useState(3)
     const [route, setRoute] = useState("Login")
 
   return (

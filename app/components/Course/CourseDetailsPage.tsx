@@ -60,7 +60,6 @@ const CourseDetailsPage: FC<Props> = ({ id }) => {
                                 setRoute={setRoute}
                                 open={open}
                                 setOpen={setOpen}
-                                activeItem={1}
                             />
 
                             {

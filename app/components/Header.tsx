@@ -20,7 +20,7 @@ import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  activeItem: number;
+  activeItem?: any;
   route: string;
   setRoute: (route: string) => void;
 }

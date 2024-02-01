@@ -53,7 +53,7 @@ const Page = (props: Props) => {
               setRoute={setRoute}
               open={open}
               setOpen={setOpen}
-              activeItem={1}
+              activeItem={2}
             />
 
             <div className='w-[95%] 800px:w-[85%] m-auto min-h-[70vh]'>
