@@ -1,4 +1,4 @@
-import React, { Component, FC } from 'react'
+import React, { FC } from 'react'
 import { Modal, Box } from '@mui/material';
 
 type Props = {
@@ -7,9 +7,10 @@ type Props = {
     activeItem: any;
     component: any;
     setRoute: (route: string) => void;
+    refetch?: any;
 }
 
-const CustomModal: FC<Props> = ({ open, activeItem, setOpen, setRoute, component: Component }) => {
+const CustomModal: FC<Props> = ({ open, activeItem, refetch, setOpen, setRoute, component: Component }) => {
     return (
         <Modal
             open={open}
@@ -22,7 +23,7 @@ const CustomModal: FC<Props> = ({ open, activeItem, setOpen, setRoute, component
                 className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none"
             >
 
-                <Component setOpen={setOpen} setRoute={setRoute} />
+                <Component setOpen={setOpen} setRoute={setRoute} refetch={refetch} />
 
             </Box>
 

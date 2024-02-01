@@ -2,7 +2,7 @@ import { styles } from '@/app/styles/style'
 import CoursePlayer from '@/app/utils/CoursePlayer'
 import Ratings from '@/app/utils/Ratings'
 import Link from 'next/link'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { IoCheckmarkDoneCircleOutline, IoCloseOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 import { format } from 'timeago.js'
@@ -23,8 +23,14 @@ type Props = {
 
 const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret, setRoute, setOpen: OpenLoginModal }) => {
     const { data: userData } = useLoadUserQuery(undefined, {})
-    const user = userData?.user
+    const [user, setUser] = useState<any>()
     const [open, setOpen] = useState(false)
+
+    useEffect(() => {
+        if (userData) {
+            setUser(userData?.user)
+        }
+    },[userData])
     const dicountPercentage = ((data?.estimatedPrice - data?.price) / data?.estimatedPrice) * 100
 
     const dicountPercentagePrice = dicountPercentage.toFixed(0)
@@ -39,6 +45,7 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret, setRoute,
             OpenLoginModal(true)
         }
     }
+    console.log(data)
     return (
         <div>
             <div className='w-[90%] m-auto py-5'>
@@ -297,7 +304,7 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret, setRoute,
                                 {
                                     stripePromise && clientSecret && (
                                         <Elements stripe={stripePromise} options={{ clientSecret }}>
-                                            <CheckOutForm data={data} setOpen={setOpen} />
+                                            <CheckOutForm data={data} setOpen={setOpen} user={user} />
                                         </Elements>
                                     )
                                 }

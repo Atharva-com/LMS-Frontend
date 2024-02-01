@@ -14,32 +14,34 @@ type Props = {
 
 const AllInvoices: FC<Props> = ({ isDashboard }) => {
     const { theme, setTheme } = useTheme()
-    const { isLoading, data } = useGetAllOrderQuery({})
+    const { data, isLoading } = useGetAllOrderQuery({})
     const { data: userData } = useGetAllUsersQuery({})
     const { data: coursesData } = useGetAllCoursesQuery({})
 
     const [orderData, setOrderData] = useState([])
-
+console.log(data)
     useEffect(() => {
 
         if (data) {
-            const temp = data.orders.map((item: any) => {
-                const user = userData?.users.find(
-                    (user: any) => user._id === item.userId
-                )
-                const course = coursesData?.courses.find(
-                    (course: any) => course._id === item.courseId
-                )
-                return {
-                    ...item,
-                    userName: user?.name,
-                    userEmail: user?.email,
-                    title: course?.name,
-                    price: course?.price,
-                }
-            })
+            if (data?.success === true) {
+                const temp = data.orders.map((item: any) => {
+                    const user = userData?.users.find(
+                        (user: any) => user._id === item.userId
+                    )
+                    const course = coursesData?.courses.find(
+                        (course: any) => course._id === item.courseId
+                    )
+                    return {
+                        ...item,
+                        userName: user?.name,
+                        userEmail: user?.email,
+                        title: course?.name,
+                        price: course?.price,
+                    }
+                })
 
-            setOrderData(temp)
+                setOrderData(temp)
+            }
         }
 
     }, [data, userData, coursesData])
@@ -69,26 +71,19 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
     ]
 
     const rows: any = [
-        {
-            id: 'scr32543221',
-            userName: 'John Doe',
-            userEmail: 'xyz@example.com.',
-            title: 'React js',
-            price: 200,
-            createdAt: '12/10/2021',
-        }
+
     ]
 
-    // orderData && orderData.forEach((item: any) => {
-    //     rows.push({
-    //         id: item._id,
-    //         userName: item.userName,
-    //         userEmail: item.userEmail,
-    //         title: item.title,
-    //         price: item.price,
-    //         createdAt: item.createdAt,
-    //     })
-    // })
+    orderData && orderData.forEach((item: any) => {
+        rows.push({
+            id: item._id,
+            userName: item.userName,
+            userEmail: item.userEmail,
+            title: item.title,
+            price: item.price,
+            createdAt: item.createdAt,
+        })
+    })
 
     return (
         <div className={!isDashboard ? 'mt-[40px]' : 'mt-[0px]'}>

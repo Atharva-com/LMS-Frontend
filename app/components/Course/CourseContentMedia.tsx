@@ -10,6 +10,9 @@ import { format } from 'timeago.js';
 import { BiMessage } from 'react-icons/bi';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import Ratings from '@/app/utils/Ratings';
+import socketIO from 'socket.io-client'
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, {transports: ["websocket"]})
 
 type Props = {
     user: any;
@@ -78,6 +81,12 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                 toast.success("Question Added Successfully.")
                 setQuestion("")
                 refetch()
+                socketId.emit("notification", {
+                    title: "New Question received",
+                    message: `You have a new question from ${user.name} in ${data[activeVideo]?.title}`,
+                    userId: user?._id
+                
+                })
             } else if (questionData?.success === false) {
                 toast.error("Something went wrong.")
             }
@@ -88,6 +97,13 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                 toast.success("Answer Added Successfully.")
                 setAnswer("")
                 refetch()
+                if(user.role !== "admin"){
+                    socketId.emit("notification", {
+                        title: "New Reply received",
+                        message: `You have a new question reply from ${user.name} in ${data[activeVideo]?.title}`,
+                        userId: user?._id
+                    })
+                }
             } else if (answerData?.success === false) {
                 toast.error("Something went wrong.")
             }
@@ -99,6 +115,12 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                 setReview("")
                 setRating(0)
                 courseRefetch()
+                socketId.emit("notification", {
+                    title: "New Review received",
+                    message: `You have a new review from ${user.name} in ${data[activeVideo]?.title}`,
+                    userId: user?._id
+                
+                })
             } else if (reviewData?.success === false) {
                 toast.error("Something went wrong.")
             }

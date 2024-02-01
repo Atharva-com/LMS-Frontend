@@ -50,7 +50,7 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
 
                 <div className='pt-[80px] pr-8'>
 
-                    <div className='w-full dark:bg-[#111C43] bg-[#3ccba0] rounded-sm shadow'>
+                    <div className='w-full dark:bg-[#111C43] bg-gray-600 rounded-sm shadow'>
 
                         <div className="flex items-center p-5 justify-between">
 
@@ -74,7 +74,7 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
 
                     </div>
 
-                    <div className="w-full dark:bg-[#111C43] bg-[#3ccba0] rounded-sm shadow my-8">
+                    <div className="w-full dark:bg-[#111C43] bg-gray-300 rounded-sm shadow my-8">
                         <div className="flex items-center p-5 justify-between">
                             <div>
                                 <PiUsersFourLight className='dark:text-[#45CBA0] text-[#000] text-[30px]' />

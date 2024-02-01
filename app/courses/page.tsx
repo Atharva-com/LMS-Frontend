@@ -8,6 +8,7 @@ import Header from '../components/Header'
 import Heading from '../utils/Heading'
 import { styles } from '../styles/style'
 import CourseCard from '../components/Course/CourseCard'
+import { HashLoader } from 'react-spinners'
 
 type Props = {}
 
@@ -42,7 +43,9 @@ const Page = (props: Props) => {
     <div>
       {
         isLoading ? (
-          <div></div>
+          <div className={`w-full h-screen flex items-center justify-center `}>
+                        <HashLoader color='#37a39a' size={40} className='mx-auto' />
+                    </div>
         ) : (
           <>
             <Header
