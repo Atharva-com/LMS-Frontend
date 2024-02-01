@@ -28,20 +28,21 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
-  // const { user } = useSelector((state: any) => state.auth)
-  const {data: userData, isLoading, refetch} = useLoadUserQuery(undefined, {})
+  const { user } = useSelector((state: any) => state.auth)
+  const { data: userData, isLoading, refetch } = useLoadUserQuery(undefined, {})
   const [socialAuth, { isSuccess }] = useSocialAuthMutation()
   const { data } = useSession()
   const [logout, setLogout] = useState(false)
+  console.log(userData)
   const { } = useLogoutQuery(undefined, { skip: !logout ? true : false })
   useEffect(() => {
     if (!isLoading) {
-      if(!userData) {
-      if (data) {
-        socialAuth({ email: data?.user?.email, name: data?.user?.name, avatar: data?.user?.image })
+      if (!user) {
+        if (data) {
+          socialAuth({ email: data?.user?.email, name: data?.user?.name, avatar: data?.user?.image })
+        }
+        refetch()
       }
-      refetch()
-    }
     }
 
     if (data === null) {
@@ -53,7 +54,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
 
     if (data === null && !isLoading && userData === null) {
       setLogout(true)
-      
+
     }
   }, [data, userData, isLoading])
 
@@ -66,7 +67,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
       }
 
     })
-  }, [] )
+  }, [])
   const handleClose = (e: any) => {
     if (e.target.id === 'screen') {
       setOpenSidebar(false)
@@ -75,7 +76,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
 
   return (
     <div className='w-full relative'>
-      <div className={`${active ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black bg-white fixed top-0 left-0 w-full h-[80px] border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 z-[80]" : "w-full border-b h-[80px] z-[80px] dark:shadow dark:border-[#ffffff1c]" } `} >
+      <div className={`${active ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black bg-white fixed top-0 left-0 w-full h-[80px] border-b dark:border-[#ffffff1c] shadow-xl transition duration-500 z-[80]" : "w-full border-b h-[80px] z-[80px] dark:shadow dark:border-[#ffffff1c]"} `} >
 
         <div className='w-[95%] 800px:w-[92%] m-auto py-2 h-full'>
 
@@ -110,14 +111,14 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
               </div>
 
               {
-                userData ? (
+                user ? (
                   <Link href={'/profile'} className='flex items-center ml-5'>
                     <Image
                       src={userData?.user?.avatar?.url || data?.user?.image || avatar}
                       alt="avatar"
                       width={30}
                       height={30}
-                      style={{border: `${activeItem === 5 ? '2px solid #37a39a' : 'none'}`}}
+                      style={{ border: `${activeItem === 5 ? '2px solid #37a39a' : 'none'}` }}
                       className='w-[30px] h-[30px] rounded-full cursor-pointer object-cover'
                     />
                   </Link>
