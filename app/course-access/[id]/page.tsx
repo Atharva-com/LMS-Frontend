@@ -27,8 +27,6 @@ const Page = ({params}: Props) => {
         }
     },[data, error, id])
 
-    console.log(data)
-
   return (
     <>
         {

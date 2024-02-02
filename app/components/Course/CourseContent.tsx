@@ -19,7 +19,6 @@ const CourseContent: FC<Props> = ({ id, user }) => {
   const data = contentData?.content
 
   const [activeVideo, setActiveVideo] = useState(0)
-  console.log(data)
   return (
     <>
       {

@@ -11,6 +11,7 @@ import { BiMessage } from 'react-icons/bi';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import Ratings from '@/app/utils/Ratings';
 import socketIO from 'socket.io-client'
+import { useSession } from 'next-auth/react';
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, {transports: ["websocket"]})
 
@@ -24,7 +25,7 @@ type Props = {
 }
 
 const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveVideo, refetch }) => {
-
+    const { data: userData } = useSession()
     const [activeBar, setActiveBar] = useState(0)
     const [question, setQuestion] = useState("")
     const [questionId, setQuestionId] = useState('')
@@ -241,7 +242,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                         <div className='w-full flex'>
 
                             <Image
-                                src={user?.avatar ? user?.avatar?.url : avatar}
+                                src={user?.avatar || userData ? userData?.user?.image || user?.avatar?.url : avatar}
                                 alt=''
                                 width={60}
                                 height={60}
@@ -290,6 +291,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                 questionId={questionId}
                                 handleAnswerSubmit={handleAnswerSubmit}
                                 answerLoading={answerLoading}
+                                userData={userData}
                             />
                         </div>
                     </>
@@ -305,7 +307,7 @@ const CourseContentMedia: FC<Props> = ({ user, data, id, activeVideo, setActiveV
                                     <>
                                         <div className="w-full flex">
                                             <Image
-                                                src={user?.avatar?.url || data?.user?.image || avatar}
+                                                src={user?.avatar?.url || userData?.user?.image || avatar}
                                                 alt=''
                                                 width={60}
                                                 height={60}
@@ -507,7 +509,8 @@ const CommentReply = ({
     setQuestionId,
     handleAnswerSubmit,
     answerLoading,
-    questionId
+    questionId,
+    userData
 }: any) => {
     return (
         <div className='w-full my-3'>
@@ -525,6 +528,7 @@ const CommentReply = ({
                             handleAnswerSubmit={handleAnswerSubmit}
                             answerLoading={answerLoading}
                             questionId={questionId}
+                            userData={userData}
                         />
                     )
                 })
@@ -543,6 +547,7 @@ const CommentItem = ({
     setQuestionId,
     handleAnswerSubmit,
     answerLoading,
+    userData
 }: any) => {
     const [replyActive, setReplyActive] = useState(false)
     console.log(user)
@@ -551,7 +556,7 @@ const CommentItem = ({
             <div className="flex mb-2">
                 <div>
                     <Image
-                        src={item?.user?.avatar ? item?.user?.avatar?.url : avatar}
+                        src={item?.user?.avatar || userData ? userData?.user?.image || item?.user?.avatar?.url : avatar}
                         alt=''
                         width={50}
                         height={50}
