@@ -17,12 +17,10 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user?.name)
-    const router = useRouter()
     const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation()
-    const [loadUser, setLoadUser] = useState(false)
     const {data} = useSession()
     const [editProfile, { isSuccess: success, error: profileError, isLoading }] = useEditProfileMutation()
-    const { } = useLoadUserQuery(undefined, { skip: loadUser ? false : true })
+    const {data: userData, refetch } = useLoadUserQuery(undefined, {refetchOnMountOrArgChange: true})
 
     const imageHandler = async (e: any) => {
         const file = e.target.files[0]
@@ -32,7 +30,6 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
         fileReader.onload = () => {
             if (fileReader.readyState === 2) {
                 updateAvatar({ avatar: fileReader.result })
-                router.refresh()
             }
         }
 
@@ -48,7 +45,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
     useEffect(() => {
         if (isSuccess || success) {
-            setLoadUser(true)
+            refetch()
         }
 
         if (error || profileError) {
@@ -68,7 +65,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                 <div className="relative">
 
                     <Image
-                        src={user?.avatar || data || avatar ? user?.avatar?.url || data?.user?.image || avatar : avatarDefault}
+                        src={userData?.user || user?.avatar || data || avatar ? userData?.user?.avatar?.url || user?.avatar?.url || data?.user?.image || avatar : avatarDefault}
                         alt=''
                         width={120}
                         height={120}

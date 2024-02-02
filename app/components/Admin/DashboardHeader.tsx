@@ -24,11 +24,17 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
     const [updateNotificationStatus, { data: updateData }] = useUpdateNotificationStatusMutation()
 
     const [notifications, setNotifications] = useState([])
-
-    const audio =  new Audio("http://codeskulptor-demos.commondatastorage.googleapis.com/descent/gotitem.mp3")
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+    useEffect(() => {
+        // Check if we're in the browser environment
+        if (typeof window !== 'undefined') {
+            const audioElement = new Audio("http://codeskulptor-demos.commondatastorage.googleapis.com/descent/gotitem.mp3");
+            setAudio(audioElement);
+        }
+    }, []);
 
     const playerNotificationSound = () => {
-        audio.play()
+        audio?.play()
     }
 
     useEffect(() => {
@@ -44,7 +50,7 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
             }
         }
 
-        audio.load()
+        audio?.load()
     }, [data, updateData])
 
     useEffect(() => {

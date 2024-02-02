@@ -45,7 +45,6 @@ const CourseDetails: FC<Props> = ({ data, stripePromise, clientSecret, setRoute,
             OpenLoginModal(true)
         }
     }
-    console.log(data)
     return (
         <div>
             <div className='w-[90%] m-auto py-5'>
