@@ -43,13 +43,13 @@ const Profile: FC<Props> = ({ user }) => {
   }
 
   useEffect(() => {
-    if(data){
-      if(data?.success === true){
-        const filteredCourses = user.courses.map((userCourse: any) => data.courses.find((course: any) => course.id === userCourse.id)).filter((course: any)=> course !== undefined)
+    if (data) {
+      if (data?.success === true) {
+        const filteredCourses = user.courses.map((userCourse: any) => data.courses.find((course: any) => course.id === userCourse.id)).filter((course: any) => course !== undefined)
         setCourses(filteredCourses)
       }
     }
-  },[data, isLoading])
+  }, [data, isLoading])
 
   return (
     <div className='w-[85%] flex mx-auto'>
@@ -75,26 +75,26 @@ const Profile: FC<Props> = ({ user }) => {
         )
       }
 
-{
+      {
         active === 3 && (
           <div className='w-full pl-7 px-2 800px:px-10 800px:pl-8'>
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 1500px:grid-cols-4 1500px:gap-[35px] mb-12 border-0">
-                {courses && (
-                  courses.map((item: any, index: number) => {
-                    return (
-                      <CourseCard item={item} key={index} />
-                    )
-                  })
-                )}
-
-                {
-                  courses.length === 0 && (
-                    <h1 className='text-center text-[18px] font-Poppins'>
-                      You don&apos;t have any purchased courses .
-                    </h1>
+              {courses && (
+                courses.map((item: any, index: number) => {
+                  return (
+                    <CourseCard item={item} key={index} />
                   )
-                }
+                })
+              )}
             </div>
+
+            {
+              courses.length === 0 && (
+                <h1 className='text-center text-[18px] font-Poppins'>
+                  You don&apos;t have any purchased courses .
+                </h1>
+              )
+            }
           </div>
         )
       }
