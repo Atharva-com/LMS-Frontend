@@ -29,11 +29,10 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
   const [active, setActive] = useState(false)
   const [openSidebar, setOpenSidebar] = useState(false)
   const { user } = useSelector((state: any) => state.auth)
-  const { data: userData, isLoading, refetch } = useLoadUserQuery(undefined, {})
+  const { data: userData, isLoading, refetch } = useLoadUserQuery(undefined, {refetchOnMountOrArgChange: true})
   const [socialAuth, { isSuccess }] = useSocialAuthMutation()
   const { data } = useSession()
   const [logout, setLogout] = useState(false)
-  console.log(userData)
   const { } = useLogoutQuery(undefined, { skip: !logout ? true : false })
   useEffect(() => {
     if (!isLoading) {
@@ -183,6 +182,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   activeItem={activeItem}
                   setRoute={setRoute}
                   component={Login}
+                  refetch={refetch}
                 />
               )
             }
@@ -201,6 +201,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                   activeItem={activeItem}
                   setRoute={setRoute}
                   component={SignUp}
+                  refetch={refetch}
                 />
               )
             }

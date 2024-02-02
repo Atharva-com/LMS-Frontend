@@ -6,7 +6,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { styles } from '../../../app/styles/style'
 import { useLoginMutation } from '../../../redux/features/auth/authApi'
 import toast from 'react-hot-toast'
-import { HashLoader, SyncLoader } from 'react-spinners'
+import { HashLoader } from 'react-spinners'
 import { signIn } from 'next-auth/react'
 
 type Props = {

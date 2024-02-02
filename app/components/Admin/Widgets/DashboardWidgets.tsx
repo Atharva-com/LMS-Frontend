@@ -42,9 +42,10 @@ const CircularProgressWithLabel: FC<Props> = ({ open, value }) => {
 const DashboardWidgets: FC<Props> = ({ open }) => {
     const [ordersComparePercentage, setOrdersComparePercentage] = useState<any>()
     const [UserComparePercentage, setUserComparePercentage] = useState<any>()
-
     const { data, isLoading } = useGetUsersAnalyticsQuery({})
     const { data: ordersData, isLoading: OrdersLoading } = useGetOrdersAnalyticsQuery({})
+
+    console.log(data, ordersData)
 
     useEffect(() => {
         if (isLoading && OrdersLoading) {
@@ -52,15 +53,15 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
         } else {
             if (data && ordersData) {
                 if (data.success === true && ordersData.success === true) {
-                    const usersLastTwoMonths = data.users.last12Months.slice(-2)
-                    const ordersLastTwoMonths = ordersData.orders.last12Months.slice(-2)
+                    const usersLastTwoMonths = data.user.last12Months.slice(-2)
+                    const ordersLastTwoMonths = ordersData.order.last12Months.slice(-2)
 
                     if (usersLastTwoMonths.length === 2 && ordersLastTwoMonths.length === 2) {
                         const usersCurrentMonth = usersLastTwoMonths[1].count
                         const usersPreviousMonth = usersLastTwoMonths[0].count
                         const ordersCurrentMonth = ordersLastTwoMonths[1].count
                         const ordersPreviousMonth = ordersLastTwoMonths[0].count
-                        const totalUsersPercentage =usersCurrentMonth !== 0 ? ((usersCurrentMonth - usersPreviousMonth) / usersPreviousMonth) * 100 : 100
+                        const totalUsersPercentage =usersPreviousMonth !== 0 ? ((usersCurrentMonth - usersPreviousMonth) / usersPreviousMonth) * 100 : 100
                         const totalSalesPercentage = ordersPreviousMonth !== 0 ? ((ordersCurrentMonth - ordersPreviousMonth) / ordersPreviousMonth) * 100 : 100
 
                         setUserComparePercentage({
@@ -92,7 +93,7 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
 
                 <div className='pt-[80px] pr-8'>
 
-                    <div className='w-full dark:bg-[#111C43] bg-gray-600 rounded-sm shadow'>
+                    <div className='w-full dark:bg-[#111C43] bg-gray-300 rounded-sm shadow'>
 
                         <div className="flex items-center p-5 justify-between">
 
