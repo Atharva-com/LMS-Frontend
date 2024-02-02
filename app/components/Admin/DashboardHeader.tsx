@@ -25,7 +25,7 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
 
     const [notifications, setNotifications] = useState([])
 
-    const [audio] = useState(
+    const [audio, setAudio] = useState<any>(
         new Audio("http://codeskulptor-demos.commondatastorage.googleapis.com/descent/gotitem.mp3")
     )
 
