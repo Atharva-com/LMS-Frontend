@@ -28,11 +28,11 @@ const Page = (props: Props) => {
     }
 
     if (category !== "All") {
-      setCourses(data?.courses.filter((course: any) => course.categories === category))
+      setCourses(data?.courses?.filter((course: any) => course.categories === category))
     }
 
     if (search) {
-      setCourses(data?.courses.filter((course: any) => course.name.toLowerCase().includes(search.toLowerCase())))
+      setCourses(data?.courses?.filter((course: any) => course.name.toLowerCase().includes(search.toLowerCase())))
     }
 
   }, [data, category, search])
