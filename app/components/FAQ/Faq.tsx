@@ -34,7 +34,7 @@ const Faq: FC<Props> = (props: Props) => {
                             questions?.map((q: any) => {
                                 return (
                                     <div
-                                        key={q.id}
+                                        key={q._id}
                                         className={`${q._id !== questions[0]?._id && 'border-t'
                                             } border-gray-200 pt-4`}
                                     >
